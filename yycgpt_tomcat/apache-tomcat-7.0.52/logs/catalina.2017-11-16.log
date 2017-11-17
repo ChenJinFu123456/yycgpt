@@ -1,0 +1,64 @@
+2017-11-16 10:36:49 org.apache.catalina.core.AprLifecycleListener init
+信息: The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: C:\Program Files\Java\jdk1.6.0_45\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;E:\program\OraClient10g\bin;E:\oracle\product\10.2.0\db_1\bin;D:\yycgpt\yycgpt_maven\apache-maven-3.2.1\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Program Files\MySQL\Program\bin;D:\Program Files\software\VisualSVNServer\bin;D:\Program Files\software\TortoiseGit\bin;D:\Oracle\instantclient_11_2;D:\Program Files\software\TortoiseSVN\bin;D:\Program Files\software\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Java\jdk1.6.0_45\bin;C:\Program Files\Java\jdk1.6.0_45\jre\bin;.
+2017-11-16 10:36:49 org.apache.coyote.AbstractProtocol init
+信息: Initializing ProtocolHandler ["http-bio-8080"]
+2017-11-16 10:36:49 org.apache.coyote.AbstractProtocol init
+信息: Initializing ProtocolHandler ["ajp-bio-8009"]
+2017-11-16 10:36:49 org.apache.catalina.startup.Catalina load
+信息: Initialization processed in 780 ms
+2017-11-16 10:36:49 org.apache.catalina.core.StandardService startInternal
+信息: Starting service Catalina
+2017-11-16 10:36:49 org.apache.catalina.core.StandardEngine startInternal
+信息: Starting Servlet Engine: Apache Tomcat/7.0.52
+2017-11-16 10:36:49 org.apache.catalina.startup.HostConfig deployWAR
+信息: Deploying web application archive D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\cargocpc.war
+2017-11-16 10:36:50 org.apache.tomcat.websocket.server.WsSci onStartup
+信息: JSR 356 WebSocket (Java WebSocket 1.0) support is not available when running on Java 6. To suppress this message, run Tomcat on Java 7, remove the WebSocket JARs from $CATALINA_HOME/lib or add the WebSocketJARs to the tomcat.util.scan.DefaultJarScanner.jarsToSkip property in $CATALINA_BASE/conf/catalina.properties. Note that the deprecated Tomcat 7 WebSocket API will be available. 
+2017-11-16 10:36:50 org.apache.catalina.startup.HostConfig deployWAR
+信息: Deploying web application archive D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\yycgptproject.war
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/core_rt is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/core is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jsp/jstl/core is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/fmt_rt is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/fmt is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jsp/jstl/fmt is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jsp/jstl/functions is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://jakarta.apache.org/taglibs/standard/permittedTaglibs is already defined
+2017-11-16 10:36:54 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://jakarta.apache.org/taglibs/standard/scriptfree is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/sql_rt is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/sql is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jsp/jstl/sql is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/xml_rt is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jstl/xml is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.TaglibUriRule body
+信息: TLD skipped. URI: http://java.sun.com/jsp/jstl/xml is already defined
+2017-11-16 10:36:55 org.apache.catalina.startup.HostConfig deployDirectory
+信息: Deploying web application directory D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\docs
+2017-11-16 10:36:55 org.apache.catalina.startup.HostConfig deployDirectory
+信息: Deploying web application directory D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\examples
+2017-11-16 10:36:55 org.apache.catalina.startup.HostConfig deployDirectory
+信息: Deploying web application directory D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\host-manager
+2017-11-16 10:36:55 org.apache.catalina.startup.HostConfig deployDirectory
+信息: Deploying web application directory D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\manager
+2017-11-16 10:36:55 org.apache.catalina.startup.HostConfig deployDirectory
+信息: Deploying web application directory D:\yycgpt\yycgpt_tomcat\apache-tomcat-7.0.52\webapps\ROOT
+2017-11-16 10:36:55 org.apache.coyote.AbstractProtocol start
+信息: Starting ProtocolHandler ["http-bio-8080"]
+2017-11-16 10:36:55 org.apache.coyote.AbstractProtocol start
+信息: Starting ProtocolHandler ["ajp-bio-8009"]
+2017-11-16 10:36:55 org.apache.catalina.startup.Catalina start
+信息: Server startup in 5828 ms

@@ -1,0 +1,14 @@
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: Log4jServletContainerInitializer starting up Log4j in Servlet 3.0+ environment.
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: No Spring WebApplicationInitializer types detected on classpath
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: Log4jServletContextListener ensuring that Log4j starts up properly.
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: Log4jServletFilter initialized.
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: ContextListener: contextInitialized()
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: SessionListener: contextInitialized()
+2017-11-16 10:36:55 org.apache.catalina.core.ApplicationContext log
+信息: ContextListener: attributeAdded('org.apache.jasper.compiler.TldLocationsCache', 'org.apache.jasper.compiler.TldLocationsCache@3c870e2f')
