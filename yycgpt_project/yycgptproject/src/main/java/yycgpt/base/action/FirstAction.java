@@ -11,14 +11,12 @@ import yycgpt.base.sevice.UserService;
 @Controller
 public class FirstAction {
 	
-	@Autowired
-	private UserService userService;
+	
 	//首页
 	@RequestMapping("/first")
 	public String first(Model model )throws Exception{
 		
-		Sysuser sysuser =  userService.findSysuserById("41");
-		model.addAttribute("sysuser", sysuser);
+		
 		return "/base/first";
 	}
 	

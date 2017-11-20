@@ -30,6 +30,7 @@
 	var _menus;
 	$(function() {//预加载方法
 		//通过ajax请求菜单
+		//alert("${baseurl}");
 		$.ajax({
 			url : '${baseurl}menu.json',
 			type : 'POST',
@@ -48,6 +49,7 @@
 		//加载欢迎页面
 		$('#tabs').tabs('add', {
 			title : '欢迎使用${sysuser.username}',
+			//进入首页默认欢迎页面
 			content : createFrame('${baseurl}welcome.action')
 		}).tabs({
 			//当重新选中tab时将ifram的内容重新加载一遍
