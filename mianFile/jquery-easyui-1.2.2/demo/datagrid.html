@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>jQuery EasyUI</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+	<script type="text/javascript" src="../jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+	<script>
+		$(function(){
+			$('#test').datagrid({
+				title:'My Title',//数据列表标题
+				iconCls:'icon-save',//显示图标
+				width:600,//数据列表的宽度
+				height:350,//列表的高度
+				nowrap: false,//单元格中的数据不换行，如果为true表示不换行，不换行情况下数据加载性能高，如果为false就是换行，换行数据加载性能不高
+				striped:true,//条纹显示效果
+				collapsible:true,//是否可以折叠
+				url:'datagrid_data.json',//加载数据的连接，引连接请求过来是json数据
+				sortName: 'code',//排序字段名称
+				sortOrder: 'desc',//排序的顺序
+				remoteSort: false,//是否远程排序，如果要使用排序建议使用远程排序，对数据库中所有数据进行排序，通过远程排序datagrid将sortName和sortOrder传到后台，这时后台的代码调用service及dao进行数据库排序
+				idField:'code',//此字段很重要，数据结果集的唯一约束
+				frozenColumns:[[//冻结列
+	                {field:'ck',checkbox:true},
+	                {title:'code',field:'code',width:80,sortable:true}
+				]],
+				columns:[[//普通列
+			        {title:'Base Information',colspan:3},
+					{field:'opt',title:'Operation',width:100,align:'center', rowspan:2,
+						formatter:function(value,rec){
+							return '<span style="color:red">Edit Delete</span>';
+						}
+					}
+				],[
+					{field:'name',title:'Name',width:120},
+					{field:'addr',title:'Address',width:120,rowspan:2,sortable:true,
+						sorter:function(a,b){
+							return (a>b?1:-1);
+						}
+					},
+					{field:'col4',title:'Col41',width:150,rowspan:2}
+				]],
+				pagination:true,//是否显示分页
+				rownumbers:true,//是否显示行号
+				toolbar:[{//工具栏
+					id:'btnadd',
+					text:'Add',
+					iconCls:'icon-add',
+					handler:function(){
+						$('#btnsave').linkbutton('enable');
+						alert('add')
+					}
+				},{
+					id:'btncut',
+					text:'Cut',
+					iconCls:'icon-cut',
+					handler:function(){
+						$('#btnsave').linkbutton('enable');
+						alert('cut')
+					}
+				},'-',{
+					id:'btnsave',
+					text:'Save',
+					disabled:true,
+					iconCls:'icon-save',
+					handler:function(){
+						$('#btnsave').linkbutton('disable');
+						alert('save')
+					}
+				}]
+			});
+			var p = $('#test').datagrid('getPager');
+			if (p){
+				$(p).pagination({
+					onBeforeRefresh:function(){
+						alert('before refresh');
+					}
+				});
+			}
+		});
+		function resize(){
+			$('#test').datagrid('resize', {
+				width:700,
+				height:400
+			});
+		}
+		function getSelected(){
+			var selected = $('#test').datagrid('getSelected');
+			if (selected){
+				alert(selected.code+":"+selected.name+":"+selected.addr+":"+selected.col4);
+			}
+		}
+		function getSelections(){
+			var ids = [];
+			var rows = $('#test').datagrid('getSelections');
+			for(var i=0;i<rows.length;i++){
+				ids.push(rows[i].code);
+			}
+			alert(ids.join(':'));
+		}
+		function clearSelections(){
+			$('#test').datagrid('clearSelections');
+		}
+		function selectRow(){
+			$('#test').datagrid('selectRow',2);
+		}
+		function selectRecord(){
+			$('#test').datagrid('selectRecord','002');
+		}
+		function unselectRow(){
+			$('#test').datagrid('unselectRow',2);
+		}
+		function mergeCells(){
+			$('#test').datagrid('mergeCells',{
+				index:2,
+				field:'addr',
+				rowspan:2,
+				colspan:2
+			});
+		}
+	</script>
+</head>
+<body>
+	<h1>DataGrid</h1>
+	<div style="margin-bottom:10px;">
+		<a href="#" onclick="resize()">resize</a>
+		<a href="#" onclick="getSelected()">getSelected</a>
+		<a href="#" onclick="getSelections()">getSelections</a>
+		<a href="#" onclick="clearSelections()">clearSelections</a>
+		<a href="#" onclick="selectRow()">selectRow</a>
+		<a href="#" onclick="selectRecord()">selectRecord</a>
+		<a href="#" onclick="unselectRow()">unselectRow</a>
+		<a href="#" onclick="mergeCells()">mergeCells</a>
+	</div>
+	
+	<table id="test"></table>
+	
+</body>
+</html>
