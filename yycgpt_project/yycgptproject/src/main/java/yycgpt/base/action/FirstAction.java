@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import yycgpt.base.pojo.po.Sysuser;
-import yycgpt.base.sevice.UserService;
+import yycgpt.base.service.UserService;
 
 @Controller
 public class FirstAction {

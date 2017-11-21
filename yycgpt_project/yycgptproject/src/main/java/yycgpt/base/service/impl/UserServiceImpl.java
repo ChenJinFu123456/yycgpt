@@ -9,7 +9,7 @@ import yycgpt.base.dao.mapper.SysuserMapperCustom;
 import yycgpt.base.pojo.po.Sysuser;
 import yycgpt.base.pojo.vo.SysuserCustom;
 import yycgpt.base.pojo.vo.SysuserQueryVo;
-import yycgpt.base.sevice.UserService;
+import yycgpt.base.service.UserService;
 
 public class UserServiceImpl implements UserService {
 
