@@ -65,11 +65,13 @@
 
 	{//工具栏
 		id : 'btnadd',
-		text : '添加',
+		text : '添加用户',
 		iconCls : 'icon-add',
 		handler : function() {
 			//$('#btnsave').linkbutton('enable');
-			alert('add')
+			//alert('add')
+			//打开页面的添加页面
+			createmodalwindow("添加用户信息", 800, 250, '${baseurl}user/addsysuser.action');
 		}
 	}, ];
 

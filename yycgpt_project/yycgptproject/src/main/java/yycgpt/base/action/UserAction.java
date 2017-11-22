@@ -1,6 +1,8 @@
 package yycgpt.base.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import yycgpt.base.pojo.vo.PageQuery;
 import yycgpt.base.pojo.vo.SysuserCustom;
 import yycgpt.base.pojo.vo.SysuserQueryVo;
 import yycgpt.base.process.result.DataGridResultInfo;
+import yycgpt.base.process.result.ExceptionResultInfo;
+import yycgpt.base.process.result.ResultInfo;
 import yycgpt.base.service.UserService;
 
 /**
@@ -31,7 +35,6 @@ public class UserAction {
 	@RequestMapping("/queryuser")
 	public  String queryUser(Model model)throws Exception{
 		//将页面所需要 的数据传递到页面
-		
 		
 		return "/base/user/queryuser";
 	}
@@ -64,4 +67,55 @@ public class UserAction {
 		return dataGridResultInfo;
 	}
 	
+	//跳转到添加用户提交页面
+	@RequestMapping("/addsysuser")
+	public String addsysuser(Model model)throws Exception{
+		return "/base/user/addsysuser";
+	}
+	//提交添加用户的数据
+	/**
+	 * 提交的表单数据统一使用包装类
+	 * 提交的数据要转json输出到页面
+	 */
+	@RequestMapping("/addsysusersubmit")
+	public @ResponseBody SubmitResultInfo addSysUserSumbit(SysuserQueryVo sysuserQueryVo) throws Exception{
+		//提示的用户信息
+		//String message = "操作成功";
+		//1:成功,0:失败
+		//int type = 1;
+		//默认成功
+		ResultInfo resultInfo = new ResultInfo();
+		resultInfo.setIndex(ResultInfo.TYPE_RESULT_SUCCESS);
+		resultInfo.setMessage("操作成功");
+		/*try {
+			
+			//调用service来执行用户添加
+			userService.insertSysuser(sysuserQueryVo.getSysuserCustom());
+		} catch (Exception e) {
+			// 输出异常信息
+			e.printStackTrace();
+			//对异常信息进行解析,也就是获取service的异常信息
+			message = e.getMessage();
+			type = 0;
+			//解析 自定义异常
+			if(e instanceof ExceptionResultInfo){
+				resultInfo = ((ExceptionResultInfo)e).getResultInfo();
+			}else{
+				//未知错误异常
+				resultInfo = new ResultInfo();
+				resultInfo.setMessage("系统维护中");
+				resultInfo.setIndex(ResultInfo.TYPE_RESULT_FAIL);
+			}
+		}*/
+		
+		//使用全局的异常处理器不用捕获
+		userService.insertSysuser(sysuserQueryVo.getSysuserCustom());
+		//将执行的json结果返回页面
+		/*Map<String,Object> result_map = new HashMap<String, Object>();
+		result_map.put("type", type);
+		result_map.put("message", message);*/
+		
+		SubmitResultInfo submitResultInfo = new SubmitResultInfo(resultInfo);
+		return submitResultInfo;
+	}
 }

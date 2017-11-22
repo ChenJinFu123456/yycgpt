@@ -38,6 +38,14 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:spring/springmvc.xml</param-value>
 		</init-param>
+		<!-- 屏蔽springmvc自动注册的异常处理器 
+			使用自己定义的handlerExceptionResolver全局异常处理器
+		-->
+		<init-param>
+			<param-name>detectAllHandlerExceptionResolvers</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
