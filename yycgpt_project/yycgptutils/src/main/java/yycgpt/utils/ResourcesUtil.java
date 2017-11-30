@@ -118,14 +118,14 @@ public class ResourcesUtil implements Serializable {
 		System.out.println(getValue("resources.messages", "101",new Object[]{100,200}));
 		
 		
-		//根据操作系统环境获取语言环境
-		/*Locale locale = Locale.getDefault();
+		/*//根据操作系统环境获取语言环境
+		Locale locale = Locale.getDefault();
 		System.out.println(locale.getCountry());//输出国家代码
 		System.out.println(locale.getLanguage());//输出语言代码s
 		
 		//加载国际化资源（classpath下resources目录下的messages.properties，如果是中文环境会优先找messages_zh_CN.properties）
 		ResourceBundle rb = ResourceBundle.getBundle("resources.messages", locale);
-		String retValue = rb.getString("101");//101是messages.properties文件中的key
+		String retValue = rb.getString("102");//101是messages.properties文件中的key
 		System.out.println(retValue);
 		
 		//信息格式化，如果资源中有{}的参数则需要使用MessageFormat格式化，Object[]为传递的参数，数量根据资源文件中的{}个数决定

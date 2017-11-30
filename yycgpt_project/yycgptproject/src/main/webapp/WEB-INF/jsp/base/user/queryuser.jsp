@@ -23,13 +23,13 @@
 		title : '名称',
 		width : 120
 	}, {
-		field : 'groupid',
+		field : 'groupname',
 		title : '用户类型',
 		width : 120,
 		//通过此方法重新格式化参数的内容，value:从json中取出的值，
 		//row:一行的对象，index：行的序号
 
-		formatter : function(value, row, index) {
+		/* formatter : function(value, row, index) {
 			if (value == '1') {
 				return "卫生局";
 			} else if (value == '2') {
@@ -42,38 +42,53 @@
 				return "系统管理员";
 			}
 		}
-
+ */
 	}, {
 		field : 'sysmc',
 		title : '所属单位',
 		width : 120
 	}, {
-		field : 'userstate',
+		field : 'statename',
 		title : '状态',
 		width : 120,
-		formatter : function(value, row, index) {
+		 /* formatter : function(value, row, index) {
 			if (value == '0') {
 				return "暂停";
 			} else if (value == '1') {
 				return "正常";
 			}
+		}  */
+	}, {
+		field : 'delBtn',
+		title : '删除',
+		width : 60,
+		formatter : function(value, row, index) {
+			return "<a href=javaScript:deleteSysuser('" + row.id + "')>删除</a>";
+		}
+	}, {
+		field : 'editBtn',
+		title : '修改',
+		width : 60,
+		formatter : function(value, row, index) {
+			return "<a href=javaScript:editSysUser('" + row.id + "')>修改</a>";
 		}
 	} ] ];
 
 	//datagrid的工具栏
 	var toolbar_v = [
 
-	{//工具栏
-		id : 'btnadd',
-		text : '添加用户',
-		iconCls : 'icon-add',
-		handler : function() {
-			//$('#btnsave').linkbutton('enable');
-			//alert('add')
-			//打开页面的添加页面
-			createmodalwindow("添加用户信息", 800, 250, '${baseurl}user/addsysuser.action');
-		}
-	}, ];
+			{//工具栏
+				id : 'btnadd',
+				text : '添加用户',
+				iconCls : 'icon-add',
+				handler : function() {
+					//$('#btnsave').linkbutton('enable');
+					//alert('add')
+					//打开页面的添加页面
+					createmodalwindow("添加用户信息", 800, 250,
+							'${baseurl}user/addsysuser.action');
+				}
+			}, ];
 
 	//查询
 
@@ -100,11 +115,50 @@
 			columns : datagrid_v,
 			pagination : true,//是否显示分页
 			rownumbers : true,//是否显示行号
-			pageList:[10,15,20,50],
+			pageList : [ 10, 15, 20, 50 ],
 			//工具栏
 			toolbar : toolbar_v
 		});
 	});
+
+	//删除
+	function deleteSysuser(userId) {
+		//第一个参数是提示信息，第二个参数，取消执行的函数指针，第三个参是，确定执行的函数指针
+		_confirm('您确认删除吗？', null,
+				function() {
+
+					//将要删除的id赋值给deleteid，deleteid在sysuserdeleteform中
+					$("#delete_id").val(userId);
+					//使用ajax的from提交执行删除
+					//sysuserdeleteform：form的id，userdel_callback：删除回调函数，
+					//第三个参数是url的参数
+					//第四个参数是datatype，表示服务器返回的类型
+					jquerySubByFId('sysuserdeleteform', userdel_callback, null,
+							"json");
+
+				});
+	}
+	
+	//删除用户的回调函数
+	
+	function  userdel_callback(data){
+		
+		message_alert(data);
+		
+		//删除陈功，重新加载页面
+		var type = data.resultInfo.type;
+		if(type==1){
+			queryuser();
+		}
+	}
+	
+	//修改
+	function editSysUser(id){
+		//打开页面的添加页面
+		createmodalwindow("修改用户信息", 800, 250,
+				'${baseurl}user/editSysUser.action?id='+id);
+	}
+	
 </script>
 
 </head>
@@ -122,17 +176,32 @@
 					<TD class="left">用户名称：</TD>
 					<td><INPUT type="text" name="sysuserCustom.username" /></TD>
 
-					<TD class="left">单位名称：</TD>
+					<TD class="left">所属单位：</TD>
 					<td><INPUT type="text" name="sysuserCustom.sysmc" /></TD>
+					
+					<TD class="left">用户状态：</TD>
+					<!-- <td><INPUT type="text" name="sysuserCustom.userstate" /></TD> -->
+					<td><select name="sysuserCustom.userstate">
+							<option value="">请选择</option>
+							<!-- <option value="1">正常</option>
+							<option value="0">暂停</option> -->
+							<c:forEach items="${stateList}" var="dictInfo">
+							<option value="${dictInfo.dictcode}">${dictInfo.info}</option>
+							</c:forEach>
+					</select></td>
+					
+					
 					<TD class="left">用户类型：</TD>
 					<td><select name="sysuserCustom.groupid">
 							<option value="">请选择</option>
-							<option value="1">卫生局</option>
+							<!-- <option value="1">卫生局</option>
 							<option value="2">卫生院</option>
 							<option value="3">卫生室</option>
 							<option value="4">供货商</option>
-							<option value="0">系统管理员</option>
-
+							<option value="0">系统管理员</option> -->
+							<c:forEach items="${groupList}" var="dictInfo">
+							<option value="${dictInfo.dictcode}">${dictInfo.info}</option>
+							</c:forEach>
 					</select></TD>
 					<td><a id="btn" href="#" onclick="queryuser()"
 						class="easyui-linkbutton" iconCls='icon-search'>查询</a></td>
@@ -152,5 +221,9 @@
 			</TBODY>
 		</TABLE>
 	</form>
+	<form action="${baseurl}user/deleteSysuser.action" method="post" id="sysuserdeleteform">
+	<input type="hidden" id="delete_id" name="userId"></input>
+	</form>
+	
 </body>
 </html>

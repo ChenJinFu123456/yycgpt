@@ -112,13 +112,17 @@
 								</TD>
 							</TR>
 							<TR>
-								<TD height=30 width="15%" align=right >用户密码：</TD>
+								<TD height=30 width="15%" align=right ><p>用户密码：</p><p>确认密码：</p></TD>
 								<TD class=category width="35%">
 								<div>
 									<input type="password" id="sysuser_password" name="sysuserCustom.pwd" />
+									<input type="password" id="sysuser_repassword" name="sysuserCustom.repwd" />
 								</div>
 								<div id="sysuser_passwordTip"></div>
 								</TD>
+								
+								
+								
 								<TD height=30 width="15%" align=right >用户类型：</TD>
 								<TD class=category width="35%">
 								<div>

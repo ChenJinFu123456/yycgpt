@@ -17,4 +17,6 @@
 	<!-- 用户管理 -->
 	<bean id="userService" class="yycgpt.base.service.impl.UserServiceImpl">
 	</bean>
+	<!-- 系统管理 -->
+	<bean id="systemConfigService" class="yycgpt.base.service.impl.SystemConfigServiceImpl"></bean>
 </beans>

@@ -22,4 +22,29 @@ public interface UserService {
 	public Useryy findUserYyByMc(String mc)throws Exception;
 	//供应商
 	public Usergys findUserGysByMc(String mc)throws Exception;
+	//删除用户
+	public void deleteSysuser(String userId)throws Exception;
+	/**
+	* @Title: updateSysuser  
+	* @Description: TODO 
+	* @param userId 用户的id
+	* @param sysuserCustom 表单提交的数据
+	* @throws Exception
+	* @return void    
+	* @user zhuqiujie
+	* @date  2017年11月27日上午11:20:12
+	 */
+	//修改用户
+	public void updateSysuser(String userId,SysuserCustom sysuserCustom)throws Exception;
+	/**
+	 * 
+	* @Title: findSysuserById  
+	* @Description: 根据用户id获取用户信息
+	* @param id
+	* @throws Exception
+	* @return SysuserCustom    
+	* @user zhuqiujie
+	* @date  2017年11月27日下午4:23:55
+	 */
+	public SysuserCustom findSysuserById(String id)throws Exception;
 }
