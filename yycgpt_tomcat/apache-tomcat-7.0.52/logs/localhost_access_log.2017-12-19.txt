@@ -211,3 +211,4 @@
 0:0:0:0:0:0:0:1 - - [19/Dec/2017:00:53:28 +0800] "GET /yycgptproject/ypml/exportYpxx.action HTTP/1.1" 200 9252
 0:0:0:0:0:0:0:1 - - [19/Dec/2017:00:53:28 +0800] "GET /yycgptproject/js/My97DatePicker/My97DatePicker.htm HTTP/1.1" 200 1288
 0:0:0:0:0:0:0:1 - - [19/Dec/2017:00:53:28 +0800] "POST /yycgptproject/ypml/queryypxxsubmit.action HTTP/1.1" 200 7992
+127.0.0.1 - - [19/Dec/2017:09:38:42 +0800] "GET / HTTP/1.1" 200 11418
