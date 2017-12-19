@@ -34,7 +34,7 @@
 	<!-- 使用自动扫描器，bean就是mapper类名小写-->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 	<!-- 扫描的包路径 如果扫描多个包路径，中间用,分割-->
-	<property name="basePackage" value="yycgpt.base.dao.mapper"></property>
+	<property name="basePackage" value="yycgpt.**.dao.mapper"></property>
 	
 	<!-- 配置sqlFactory -->
 	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>

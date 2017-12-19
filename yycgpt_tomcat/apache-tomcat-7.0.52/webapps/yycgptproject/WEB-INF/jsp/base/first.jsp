@@ -90,15 +90,15 @@
 		border="false" split="true" region="north">
 		<SPAN style="padding-right: 20px; float: right;" class="head">
 			欢迎当前用户：${activeUser.username}&nbsp;&nbsp;
-			<A href=javascript:showhelp()>使用帮助</A>
+			<A style="text-decoration:none;" href=javascript:showhelp()>使用帮助</A>
 			&nbsp;&nbsp;
-			<A title='修改密码' ref='modifypwd' href="#" rel='${baseurl}user/updatepwd.action' icon='icon-null' id="modifypwd" >修改密码</A>
+			<A style="text-decoration:none;" title='修改密码' ref='modifypwd' href="#" rel='${baseurl}user/updatepwd.action' icon='icon-null' id="modifypwd" >修改密码</A>
 			&nbsp;&nbsp;
-			<A id="loginOut" href=javascript:logout()>退出系统</A>
+			<A style="text-decoration:none;" id="loginOut" href=javascript:logout()>退出系统</A>
 
 		</SPAN> <SPAN style="padding-left: 10px; font-size: 16px;"><IMG
 			align="absmiddle" src="images/blocks.gif" width="20" height="20">
-			医药集中采购系统</SPAN> <SPAN style="padding-left: 15px;" id="News"></SPAN>
+			医疗器械进销存系统</SPAN> <SPAN style="padding-left: 15px;" id="News"></SPAN>
 	</DIV>
 
 	<DIV style="background: rgb(210, 224, 242); height: 30px;" split="false"

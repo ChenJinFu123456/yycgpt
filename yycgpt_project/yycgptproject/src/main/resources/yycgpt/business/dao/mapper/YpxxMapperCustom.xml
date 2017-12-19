@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yycgpt.business.dao.mapper.YpxxMapperCustom">
+
+	<sql id="query_yyxx_where">
+		<if test="ypxxCustom!=null">
+			<!-- 根据主键查询 -->
+			<if test="ypxxCustom.id!=null and ypxxCustom.id!=''">
+				and ypxx.id = #{ypxxCustom.id}
+			</if>
+			
+			
+			<if test="ypxxCustom.bm!=null and ypxxCustom.bm!=''">
+				and ypxx.bm = #{ypxxCustom.bm}
+			</if>
+			
+			<if test="ypxxCustom.bm!=null and ypxxCustom.bm!=''">
+				and ypxx.bm = #{ypxxCustom.bm}
+			</if>
+
+			<if test="ypxxCustom.mc!=null and ypxxCustom.mc!=''">
+				and ypxx.mc = #{ypxxCustom.mc}
+			</if>
+
+			<if test="ypxxCustom.jx!=null and ypxxCustom.jx!=''">
+				and ypxx.jx = #{ypxxCustom.jx}
+			</if>
+
+			<if test="ypxxCustom.gg!=null and ypxxCustom.gg!=''">
+				and ypxx.gg = #{ypxxCustom.gg}
+			</if>
+
+			<if test="ypxxCustom.zhxs!=null and ypxxCustom.zhxs!=''">
+				and ypxx.zhxs = #{ypxxCustom.zhxs}
+			</if>
+
+			<if test="ypxxCustom.scqymc!=null and ypxxCustom.scqymc!=''">
+				and ypxx.scqymc = #{ypxxCustom.scqymc}
+			</if>
+
+			<if test="ypxxCustom.spmc!=null and ypxxCustom.spmc!=''">
+				and ypxx.spmc = #{ypxxCustom.spmc}
+			</if>
+
+			<if test="ypxxCustom.jyzt!=null and ypxxCustom.jyzt!=''">
+				and ypxx.jyzt = #{ypxxCustom.jyzt}
+			</if>
+
+			<if test="ypxxCustom.lb!=null and ypxxCustom.lb!=''">
+				and ypxx.lb = #{ypxxCustom.lb}
+			</if>
+
+			<if test="ypxxCustom.price_start!=null">
+				and ypxx.zbjg >= #{ypxxCustom.price_start}
+			</if>
+
+			<if test="ypxxCustom.price_end!=null">
+			<![CDATA[
+				and ypxx.zbjg <= #{ypxxCustom.price_end}
+			]]>
+			</if>
+
+			<!-- <if test="ypxxCustom.jyztmc!=null and ypxxCustom.jyztmc!=''"> and 
+				ypxx.jyztmc = #{ypxxCustom.jyztmc} </if> -->
+		</if>
+	</sql>
+
+
+
+	<!-- 产品目录查询 -->
+	<select id="findYpxxList" parameterType="yycgpt.business.pojo.vo.YpxxQueryVo"
+		resultType="yycgpt.business.pojo.vo.YpxxCustom">
+
+		<!-- 分页头 -->
+
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum as page_num
+			from (
+		</if>
+		<!-- 分页头 -->
+		select id,
+		bm,
+		mc,
+		jx,
+		gg,
+		zhxs,
+		scqymc,
+		spmc,
+		zbjg,
+		jyzt,
+
+		(select
+		info
+		from
+		dictinfo
+		where ypxx.jyzt = dictinfo.dictcode
+		and
+		dictinfo.typecode =
+		'003') as jyztmc
+		from ypxx
+
+		<where>
+			<include refid="query_yyxx_where"></include>
+		</where>
+
+		<!-- 分页尾 -->
+		<if test="pageQuery!=null">
+			) page_1
+		
+<![CDATA[
+		where rownum <= ${pageQuery.PageQuery_end}) page_2
+		where page_2.page_num >= ${pageQuery.PageQuery_start}
+]]>
+		</if>
+		<!-- 分页尾 -->
+
+	</select>
+
+
+	<!-- 产品目录查询总数 -->
+	<select id="findYpxxListCount" parameterType="yycgpt.business.pojo.vo.YpxxQueryVo"
+		resultType="int">
+
+		select count(*)
+		from ypxx
+
+		<where>
+			<include refid="query_yyxx_where"></include>
+		</where>
+
+		<!-- 分页尾 -->
+		<if test="pageQuery!=null">
+			) page_1
+		
+<![CDATA[
+		where rownum <= ${pageQuery.PageQuery_end}) page_2
+		where page_2.page_num >= ${pageQuery.PageQuery_start}
+]]>
+		</if>
+		<!-- 分页尾 -->
+
+	</select>
+
+
+
+</mapper>

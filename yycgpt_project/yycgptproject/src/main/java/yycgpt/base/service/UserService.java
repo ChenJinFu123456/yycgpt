@@ -5,11 +5,14 @@ import java.util.List;
 import yycgpt.base.pojo.po.Sysuser;
 import yycgpt.base.pojo.po.Usergys;
 import yycgpt.base.pojo.po.Useryy;
+import yycgpt.base.pojo.vo.ActiveUser;
 import yycgpt.base.pojo.vo.SysuserCustom;
 import yycgpt.base.pojo.vo.SysuserQueryVo;
 
 public interface UserService {
 	
+	//用户认证
+	public ActiveUser checkUserInfo(String userId, String pwd) throws Exception;
 	//根据条件查询用户列表
 	public  List<SysuserCustom> findSysuserList(SysuserQueryVo sysuserQueryVo)throws Exception;
 	//根据条件查询列表的总数

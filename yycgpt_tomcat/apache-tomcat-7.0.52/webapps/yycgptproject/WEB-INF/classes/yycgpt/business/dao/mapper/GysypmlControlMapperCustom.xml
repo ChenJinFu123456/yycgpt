@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="yycgpt.business.dao.mapper.GysypmlControlMapperCustom">
+
+	<!-- 供货商产品目录控制的查询条件 -->
+	<sql id="query_gysypmlcontrol_where">
+
+		<if test="gysypmlControlCustom!=null">
+
+			<if
+				test="gysypmlControlCustom.usergysid!=null and gysypmlControlCustom.usergysid!=''">
+				and gysypml_control.usergysid =
+				#{gysypmlControlCustom.usergysid}
+			</if>
+
+			<if
+				test="gysypmlControlCustom.ypxxid!=null and gysypmlControlCustom.ypxxid!=''">
+				and gysypml_control.ypxxid = #{gysypmlControlCustom.ypxxid}
+			</if>
+
+			<if
+				test="gysypmlControlCustom.control!=null and gysypmlControlCustom.control!=''">
+				and gysypml_control.control = #{gysypmlControlCustom.control}
+			</if>
+			<!-- 
+			本来应该重新设置sql查询代码块，也就是usergyscustom,但是项目中没有生成关于usergys的mapper和pojo,
+			所以jsp中暂时用gysypmlControlCustom.usergysmc来接受参数值
+			 -->
+			<if
+				test="gysypmlControlCustom.usergysmc!=null and gysypmlControlCustom.usergysmc!=''">
+				and usergys.mc = #{gysypmlControlCustom.usergysmc}
+			</if>
+		</if>
+	</sql>
+	
+	<!-- 供应商产品控制目录查询 -->
+	<select id="findGysYpmlControlList" parameterType="yycgpt.business.pojo.vo.GysypmlControlQueryVo"
+		resultType="yycgpt.business.pojo.vo.GysypmlControlCustom">
+		<!-- 分页头 -->
+
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum as page_num
+			from (
+		</if>
+		<!-- 分页头 -->
+
+		select
+		gysypml_control.id as gysypmlid,
+		gysypml_control.ypxxid,
+		gysypml_control.usergysid,
+		gysypml_control.advice,
+		usergys.mc as usergysmc,
+		gysypml_control.control,
+		(select info
+		from dictinfo
+		where
+		dictinfo.typecode = '008'
+		and dictinfo.dictcode =
+		gysypml_control.control) as controlmc,
+		ypxx.id,
+		ypxx.bm,
+		ypxx.mc,
+		ypxx.jx,
+		ypxx.gg,
+		ypxx.zhxs,
+		ypxx.scqymc,
+		ypxx.spmc,
+		ypxx.zbjg,
+		ypxx.jyzt,
+		(select info
+		from dictinfo
+		where ypxx.jyzt = dictinfo.dictcode
+		and
+		dictinfo.typecode = '003') as jyztmc
+
+		from usergys, gysypml_control,
+		ypxx
+		where gysypml_control.usergysid = usergys.id
+		and
+		gysypml_control.ypxxid = ypxx.id
+
+		<!-- 查询条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where" />
+		<include refid="query_gysypmlcontrol_where"></include>
+		<!-- 查询条件 -->
+
+
+		<!-- 分页尾 -->
+		<if test="pageQuery!=null">
+			) page_1
+		
+<![CDATA[
+		where rownum <= ${pageQuery.PageQuery_end}) page_2
+		where page_2.page_num >= ${pageQuery.PageQuery_start}
+]]>
+		</if>
+		<!-- 分页尾 -->
+
+	</select>
+
+
+	<!-- 供应商产品控制目录总条数 -->
+	<select id="findGysYpmlControlCount" parameterType="yycgpt.business.pojo.vo.GysypmlControlQueryVo"
+		resultType="int">
+
+		select
+		count(*)
+		from usergys, gysypml_control,
+		ypxx
+		where
+		gysypml_control.usergysid = usergys.id
+		and
+		gysypml_control.ypxxid = ypxx.id
+		
+		<!-- 查询条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where" />
+		<include refid="query_gysypmlcontrol_where"></include>
+		<!-- 查询条件 -->
+
+	</select>
+
+</mapper>

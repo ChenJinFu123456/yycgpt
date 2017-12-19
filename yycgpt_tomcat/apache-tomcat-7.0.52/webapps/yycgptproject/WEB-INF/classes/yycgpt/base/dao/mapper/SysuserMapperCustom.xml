@@ -18,11 +18,11 @@
 			<if test="sysuserCustom.sysmc!=null and sysuserCustom.sysmc!=''">
 				and sysuser.sysmc like '%${sysuserCustom.sysmc}%'
 			</if>
-			
+
 			<if test="sysuserCustom.groupid!=null and sysuserCustom.groupid!=''">
 				and sysuser.groupid = #{sysuserCustom.groupid}
 			</if>
-			
+
 			<if test="sysuserCustom.userstate!=null and sysuserCustom.userstate!=''">
 				and sysuser.userstate = #{sysuserCustom.userstate}
 			</if>
@@ -46,13 +46,15 @@
 		SYSUSER.userid,
 		SYSUSER.username,
 		SYSUSER.groupid,
-		
-		(select info from dictinfo where dictcode= SYSUSER.groupid and typecode='s01') as groupname, 
-		
+
+		(select info from dictinfo where dictcode= SYSUSER.groupid and
+		typecode='s01') as groupname,
+
 		SYSUSER.userstate,
-		
-		(select info from dictinfo where dictcode= SYSUSER.userstate and  typecode = 'yhzt') as statename,
-		
+
+		(select info from dictinfo where dictcode= SYSUSER.userstate and typecode =
+		'yhzt') as statename,
+
 		SYSUSER.sysid,
 		decode(SYSUSER.Groupid,
 		'1',
@@ -78,9 +80,9 @@
 			<include refid="query_sysuser_where"></include>
 		</where>
 
-		) page_1
 
 		<if test="pageQuery!=null">
+			) page_1
 		
 <![CDATA[
 		where rownum <= ${pageQuery.PageQuery_end}) page_2

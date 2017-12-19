@@ -19,6 +19,17 @@
 	<!-- 处理器映射器和适配器，可以使用mvc注解驱动 -->
 	<mvc:annotation-driven />
 
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<!-- 多个拦截器,顺序执行 -->
+		<!-- 用户身份校验的拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="yycgpt.base.filter.LoginInterceptor"></bean>
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
 
 	<!-- 视图解析器 -->
 	<bean
@@ -39,8 +50,14 @@
 		<!-- 注入一个json转换器 -->
 		<property name="jsonMessageConverter" ref="jsonMessageConverter" />
 	</bean>
-
-
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为5MB -->
+		<property name="maxUploadSize">
+			<value>5242880</value>
+		</property>
+	</bean>
 
 
 </beans>

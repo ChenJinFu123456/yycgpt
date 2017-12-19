@@ -92,7 +92,6 @@ $(document).ready(function(){
 			//登录错误，重新刷新验证码
 			randomcode_refresh();
 		}
-
 	}
 	//刷新验证码
 	//实现思路，重新给图片的src赋值，后边加时间，防止缓存 
@@ -102,7 +101,7 @@ $(document).ready(function(){
 	}
 	//回首页
 	function tofirst(){
-		
+		//最外面一层执行跳转
 		if(parent.parent.parent){
 			parent.parent.parent.location='${baseurl}first.action';
 		}else if(parent.parent){
@@ -117,12 +116,13 @@ $(document).ready(function(){
 </SCRIPT>
 </HEAD>
 <BODY style="background: #f6fdff url(${baseurl}images/login/bg1.jpg) repeat-x;">
-	<FORM id="loginform" name="loginform" action="${baseurl}loginsubmit.action"
+	<FORM id="loginform" name="loginform" action="${baseurl}loginSubmit.action"
 		method="post">
 		<DIV class="logincon">
 
 			<DIV class="title">
-				<IMG alt="" src="${baseurl}images/login/logo.png">
+				<%-- <IMG alt="" src="${baseurl}images/login/logo.png"> --%>
+				<h1 style="font-size:35px;font-weight:bold">医疗器械进销存系统</h1>
 			</DIV>
 
 			<DIV class="cen_con">
@@ -146,7 +146,7 @@ $(document).ready(function(){
 						</TR>
 						<TR>
 							<TD>验证码：</TD>
-							<TD><input id="randomcode" name="randomcode" size="8" /> <img
+							<TD><input id="randomcode" name="validateCode" size="8" /> <img
 								id="randomcode_img" src="${baseurl}validatecode.jsp" alt=""
 								width="56" height="20" align='absMiddle' /> <a
 								href=javascript:randomcode_refresh()>刷新</a></TD>
