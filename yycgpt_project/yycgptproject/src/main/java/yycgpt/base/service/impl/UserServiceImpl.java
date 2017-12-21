@@ -254,10 +254,12 @@ public class UserServiceImpl implements UserService {
 					null));
 
 		}
+		
+		//卫生局和卫生院都是监督单位
 		// 单位id/sysid
 		String sysId = null;
 		if (groupId.equals("1") || groupId.equals("2")) {
-			// 监督单位
+			// 监督单位：卫生局，卫生院
 			// 根据单位名称查询单位的信息
 			Userjd userjd = this.findUserJdByMc(sysmc);
 			if (userjd == null) {
@@ -268,8 +270,8 @@ public class UserServiceImpl implements UserService {
 			}
 			// 获取单位id
 			sysId = userjd.getId();
-		} else if (groupId.equals("3")) {// 卫生室
-			// 监督单位
+		} else if (groupId.equals("3")) {
+			// 卫生室
 			// 根据单位名称查询单位的信息
 			Useryy useryy = this.findUserYyByMc(sysmc);
 			if (useryy == null) {

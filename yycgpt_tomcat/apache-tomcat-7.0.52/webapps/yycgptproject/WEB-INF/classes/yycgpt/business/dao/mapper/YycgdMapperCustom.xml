@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="yycgpt.business.dao.mapper.YycgdMapperCustom">
+
+	<!-- sql片段 -->
+	<!-- 采购单产品明细查询条件 -->
+	<sql id="query_yycgdmx_where">
+		<if test="yyCgdMxCustom!=null">
+			<!-- 数据范围的限定 -->
+			<if test="yyCgdMxCustom.yycgdid!=null and yyCgdMxCustom.yycgdid!=''">
+				and yycgdmx.yycgdid=#{yyCgdMxCustom.yycgdid}
+			</if>
+			<!-- 采购状态 -->
+			<if test="yyCgdMxCustom.cgzt!=null and yyCgdMxCustom.cgzt!=''">
+				and yycgdmx.cgzt=#{yyCgdMxCustom.cgzt}
+			</if>
+		</if>
+
+	</sql>
+
+	<!-- 采购单的查询条件 -->
+	<sql id="query_yycgd_where">
+		<if test="yycgdCustom!=null">
+			<if test="yycgdCustom.id!=null and yycgdCustom.id!=''">
+				and yycgd.id=#{yycgdCustom.id}
+			</if>
+		</if>
+	</sql>
+
+	<!-- 采购单号的生成 -->
+	<select id="getYycgdBm" parameterType="string" resultType="string">
+		select '${value}'||yycgdbm${value}.nextval as bm from dual
+	</select>
+
+	<!-- 采购单产品明细查询列表 -->
+	<select id="findYyCgdMxList" resultType="yycgpt.business.pojo.vo.YyCgdMxCustom"
+		parameterType="yycgpt.business.pojo.vo.CgdQueryVo">
+		<!-- 分页头 -->
+
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum as page_num
+			from (
+		</if>
+		<!-- 分页头 -->
+		select
+		yycgdmx.id as yycgdmxid,
+		useryy.id as useryyid,
+		useryy.mc as
+		useryymc,
+		ypxx.id,
+		ypxx.bm,
+		ypxx.mc,
+		ypxx.jx,
+		ypxx.zbjg,
+		ypxx.gg,
+		ypxx.zhxs,
+		ypxx.scqymc,
+		ypxx.spmc,
+		ypxx.jyzt,
+		(select info
+		from
+		dictinfo
+		where
+		ypxx.jyzt =
+		dictinfo.dictcode
+		and dictinfo.typecode =
+		'003') as jyztmc,
+
+		yycgdmx.cgl,
+		yycgdmx.jyjg,
+		yycgdmx.cgje,
+		yycgdmx.cgzt,
+		(select info
+		from
+		dictinfo
+		where yycgdmx.cgzt =
+		dictinfo.dictcode
+		and
+		dictinfo.typecode =
+		'011') as cgztmc,
+		usergys.mc as
+		usergysmc,
+		usergys.id as usergysid
+
+		from
+		yycgdmx${businessyear} yycgdmx,
+		yycgd${businessyear} yycgd,
+		useryy,
+		ypxx, usergys
+		where yycgdmx.yycgdid
+		= yycgd.id
+		and
+		yycgd.useryyid =
+		useryy.id
+		and yycgdmx.ypxxid = ypxx.id
+		and
+		yycgdmx.usergysid = usergys.id
+
+		<!-- 查询条件 -->
+		<include refid="query_yycgdmx_where"></include>
+		<!-- 产品的查询 条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where"></include>
+		<!-- 查询条件 -->
+
+		<!-- 分页尾 -->
+		<if test="pageQuery!=null">
+			) page_1
+		
+<![CDATA[
+		where rownum <= ${pageQuery.PageQuery_end}) page_2
+		where page_2.page_num >= ${pageQuery.PageQuery_start}
+]]>
+		</if>
+		<!-- 分页尾 -->
+	</select>
+
+
+	<!-- 采购单产品明细查询列表总数 -->
+	<select id="findYyCgdMxCount" resultType="int"
+		parameterType="yycgpt.business.pojo.vo.CgdQueryVo">
+		select count(*)
+		from yycgdmx${businessyear} yycgdmx,
+		yycgd${businessyear} yycgd,
+		useryy, ypxx, usergys
+		where yycgdmx.yycgdid
+		= yycgd.id
+		and
+		yycgd.useryyid = useryy.id
+		and yycgdmx.ypxxid = ypxx.id
+		and
+		yycgdmx.usergysid = usergys.id
+
+		<!-- 查询条件 -->
+		<include refid="query_yycgdmx_where"></include>
+		<!-- 产品的查询 条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where"></include>
+		<!-- 查询条件 -->
+
+	</select>
+
+	<!-- 供应商采购单产品添加列表 -->
+
+	<select id="findAddYpcgdmxList" resultType="yycgpt.business.pojo.vo.YyCgdMxCustom"
+		parameterType="yycgpt.business.pojo.vo.CgdQueryVo">
+		<!-- 分页头 -->
+
+		<if test="pageQuery!=null">
+			select page_2.*
+			from (select page_1.*, rownum as page_num
+			from (
+		</if>
+		<!-- 分页头 -->
+		select
+
+		gysypml.id as gysypmlid,
+		gysypml.ypxxid,
+		gysypml.usergysid,
+		usergys.mc as
+		usergysmc,
+		gysypml_control.control,
+		(select info
+		from
+		dictinfo
+		where
+		dictinfo.typecode = '008'
+		and dictinfo.dictcode =
+		gysypml_control.control) as controlmc,
+		ypxx.id,
+		ypxx.bm,
+		ypxx.mc,
+		ypxx.jx,
+		ypxx.gg,
+		ypxx.zhxs,
+		ypxx.scqymc,
+		ypxx.spmc,
+		ypxx.zbjg,
+		ypxx.jyzt,
+		(select info
+		from dictinfo
+		where ypxx.jyzt = dictinfo.dictcode
+		and
+		dictinfo.typecode = '003') as jyztmc
+
+		from gysypml, usergys,
+		gysypml_control, ypxx
+		where gysypml.usergysid = usergys.id
+		and
+		gysypml.ypxxid = gysypml_control.ypxxid
+		and gysypml.usergysid =
+		gysypml_control.usergysid
+		and gysypml.ypxxid = ypxx.id
+		
+		
+		<!-- 限制条件 -->
+		<!--区域 产品id 
+		useryy.dq:医院的区域id
+		yycgdCustom.id:采购单的id
+		-->
+		and gysypml.usergysid in (
+		select usergysarea.usergysid from
+		usergysarea where #{useryy.dq} like
+		usergysarea.areaid || '%'
+
+		)
+		and
+		gysypml.ypxxid not in
+		(
+		select yycgdmx.ypxxid from yycgdmx${businessyear} yycgdmx
+		where
+		yycgdmx.yycgdid=#{yycgdCustom.id}
+		)
+		<!-- 限制条件 -->
+		
+		<!-- 查询 条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where"></include>
+		<include refid="yycgpt.business.dao.mapper.GysypmlMapperCustom.query_gysypml_where"></include>
+		<include refid="yycgpt.business.dao.mapper.GysypmlMapperCustom.query_gysypml_control_where"></include>
+		<!-- 查询 条件 -->
+		
+		<!-- 分页尾 -->
+		<if test="pageQuery!=null">
+			) page_1
+		
+<![CDATA[
+		where rownum <= ${pageQuery.PageQuery_end}) page_2
+		where page_2.page_num >= ${pageQuery.PageQuery_start}
+]]>
+		</if>
+		<!-- 分页尾 -->
+
+	</select>
+
+	<!-- 供应商采购单产品添加列表总数 -->
+	<select id="findAddYpcgdmxCount" resultType="int" parameterType="yycgpt.business.pojo.vo.CgdQueryVo">
+
+	select
+		count(*)
+		from gysypml, usergys,
+		gysypml_control, ypxx
+		where gysypml.usergysid = usergys.id
+		and
+		gysypml.ypxxid = gysypml_control.ypxxid
+		and gysypml.usergysid =
+		gysypml_control.usergysid
+		and gysypml.ypxxid = ypxx.id
+		
+		<!-- 限制条件 -->
+		<!--区域 产品id 
+		useryy.dq:医院的区域id
+		yycgdCustom.id:采购单的id
+		-->
+		and gysypml.usergysid in (
+		select usergysarea.usergysid from
+		usergysarea where #{useryy.dq} like
+		usergysarea.areaid || '%'
+		)
+		and
+		gysypml.ypxxid not in
+		(
+		select yycgdmx.ypxxid from yycgdmx${businessyear} yycgdmx
+		where
+		yycgdmx.yycgdid=#{yycgdCustom.id}
+		)
+		<!-- 限制条件 -->
+		
+		<!-- 查询 条件 -->
+		<include
+			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where"></include>
+		<include refid="yycgpt.business.dao.mapper.GysypmlMapperCustom.query_gysypml_where"></include>
+		<include refid="yycgpt.business.dao.mapper.GysypmlMapperCustom.query_gysypml_control_where"></include>
+		<!-- 查询 条件 -->
+		
+	</select>
+
+</mapper>
