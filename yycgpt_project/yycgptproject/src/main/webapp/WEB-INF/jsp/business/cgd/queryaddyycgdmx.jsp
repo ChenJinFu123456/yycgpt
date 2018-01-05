@@ -174,15 +174,14 @@
 			rownumbers : true,
 			toolbar : toolbar,
 			loadMsg : "",
-			pageList : [ 15, 30, 50, 100 ]
-		/* ,//设置每页显示个数
-				onClickRow : function(index, field, value) {
-							$('#gysypmllist').datagrid('unselectRow', index);
-						},
+			pageList : [ 15, 30, 50, 100 ],//设置每页显示个数
+			onClickRow : function(index, field, value) {
+						$('#gysypmllist').datagrid('unselectRow', index);
+					},
 				//将加载成功后执行：清除选中的行
-				onLoadSuccess:function(){
-					$('#gysypmllist').datagrid('clearSelections');
-				} */
+			onLoadSuccess:function(){
+				$('#gysypmllist').datagrid('clearSelections');
+			}
 		});
 
 	}

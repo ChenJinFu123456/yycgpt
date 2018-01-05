@@ -58,16 +58,16 @@ var frozenColumns;
 var columns = [ [ {
 	checkbox:true
 },{
-	field : 'ypxxid',
+	field : 'id',
 	hidden : true,
 	formatter: function(value,row,index){
-		return '<input type="hidden" name="yycgdrks['+index+'].ypxxid" value="'+value+'" />';
+		return '<input type="hidden" name="yycgdrkCustoms['+index+'].ypxxid" value="'+value+'" />';
 	}
 },{
 	field : 'yycgdid',
 	hidden : true,
 	formatter: function(value,row,index){
-		return '<input type="hidden" name="yycgdrks['+index+'].yycgdid" value="'+value+'" />';
+		return '<input type="hidden" name="yycgdrkCustoms['+index+'].yycgdid" value="'+row.yycgdbm+'" />';
 	}
 },
  {
@@ -78,7 +78,16 @@ var columns = [ [ {
 	field : 'yycgdbm',
 	title : '采购单编号',
 	width : 80
-},{
+},
+
+{
+	field : 'yycgdmc',
+	title : '采购单名称',
+	width : 200
+},
+
+
+{
 	field : 'cjtime',
 	title : '建单时间',
 	width : 70,
@@ -104,7 +113,7 @@ var columns = [ [ {
 	field : 'mc',
 	title : '通用名',
 	width : 100
-},{
+}/* ,{
 	field : 'jx',
 	title : '剂型',
 	width : 50
@@ -120,7 +129,7 @@ var columns = [ [ {
 	field : 'zbjg',
 	title : '中标价',
 	width : 50
-},{
+} */,{
 	field : 'jyjg',
 	title : '交易价',
 	width : 40
@@ -137,7 +146,7 @@ var columns = [ [ {
 	title : '入库量',
 	width : 50,
 	formatter:function(value,row,index){
-		   return '<input type="text" name="yycgdrks['+index+'].rkl" />';
+		   return '<input type="text" name="yycgdrkCustoms['+index+'].rkl" />';
 	}
 }
 ,{
@@ -145,21 +154,21 @@ var columns = [ [ {
 	title : '发票号或入库单号',
 	width : 90,
 	formatter:function(value,row,index){
-		   return '<input type="text" name="yycgdrks['+index+'].rkdh" />';
+		   return '<input type="text" name="yycgdrkCustoms['+index+'].rkdh" />';
 	}
 },{
 	field : 'ypph',
 	title : '药品批号',
 	width : 70,
 	formatter:function(value,row,index){
-		   return '<input type="text" name="yycgdrks['+index+'].ypph" />';
+		   return '<input type="text" name="yycgdrkCustoms['+index+'].ypph" />';
 	}
 },{
 	field : 'ypyxq',
 	title : '药品有效期(年)',
 	width : 70,
 	formatter:function(value,row,index){
-		   return '<input type="text" name="yycgdrks['+index+'].ypyxq"/>';
+		   return '<input type="text" name="yycgdrkCustoms['+index+'].ypyxq"/>';
 	}
 }
 ,{
@@ -238,7 +247,7 @@ function initGrid(){
 		*/
 		
 		//通过dwr加载年份
-		businessyearlist('year'); 
+		//businessyearlist('year'); 
 	});
 </script>
 </HEAD>
@@ -248,11 +257,13 @@ function initGrid(){
 			<TABLE  class="table_search">
 			<TBODY>
 				<TR>
-					<TD class="left">年份(如2014)：</TD>
-					<td><select id="year" name="year"></select>
+					<TD class="left">年份(如2017)：</TD>
+					<td><select id="year" name="year">
+					<option value="2017">2017</option>
+					</select>
 					</td>
 					<TD class="left">医院名称：</TD>
-					<td><INPUT type="text" name="useryyCustom.mc" /></td>
+					<td><INPUT type="text" name="yycgdCustom.useryymc" /></td>
 					<TD class="left">采购单编号：</td>
 					<td><INPUT type="text" name="yycgdCustom.bm" /></TD>
 					<TD class="left">采购单名称：</TD>

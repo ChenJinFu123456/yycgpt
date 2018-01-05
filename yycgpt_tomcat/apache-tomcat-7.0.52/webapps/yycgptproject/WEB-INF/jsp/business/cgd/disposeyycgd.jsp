@@ -64,16 +64,17 @@ var frozenColumns;
 var columns = [ [ {
 	checkbox:true
 },{
-	field : 'ypxxid',
+	field : 'id',//药品信息id
 	hidden : true,
 	formatter: function(value,row,index){
-		return '<input type="hidden" name="yycgdmxs['+index+'].ypxxid" value="'+value+'" />';
+		return '<input type="hidden" name="yyCgdMxCustoms['+index+'].ypxxid" value="'+value+'" />';
 	}
 },{
+	//采购单的id和采购单编号是一样的
 	field : 'yycgdid',
 	hidden : true,
 	formatter: function(value,row,index){
-		return '<input type="hidden" name="yycgdmxs['+index+'].yycgdid" value="'+value+'" />';
+		return '<input type="hidden" name="yyCgdMxCustoms['+index+'].yycgdid" value="'+row.yycgdbm+'" />';
 	}
 },
  {
@@ -197,7 +198,7 @@ function initGrid(){
 	}
 	$(function(){
 		//通过dwr加载年份
-		businessyearlist('year');
+		//businessyearlist('year');
 	});
 </script>
 </HEAD>
@@ -207,11 +208,12 @@ function initGrid(){
 			<TABLE  class="table_search">
 				<TBODY>
 					<TR>
-						<TD class="left">年份(如2014)：</TD>
+						<TD class="left">年份(如2017)：</TD>
 						<td ><select id="year" name="year">
+						<option  value="2017">2017</option>
 						</select></td>
 						<TD class="left">医院名称：</TD>
-						<td ><INPUT type="text" name="useryyCustom.mc" /></td>
+						<td ><INPUT type="text" name="yycgdCustom.useryymc" /></td>
 						<TD class="left">采购单编号：</td>
 						<td><INPUT type="text"  name="yycgdCustom.bm" /></TD>
 						<TD class="left">采购单名称：</TD>

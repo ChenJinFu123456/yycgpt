@@ -15,8 +15,7 @@
 <script src="${baseurl}js/jqueryvalidator/formValidator-4.1.3.js" type="text/javascript" charset="UTF-8"></script>
 <script src="${baseurl}js/jqueryvalidator/formValidatorRegex.js" type="text/javascript" charset="UTF-8"></script>
 
-<%-- <script type='text/javascript' src='${baseurl}dwr/engine.js'></script>   
+<script type='text/javascript' src='${baseurl}dwr/engine.js'></script>   
 <script type='text/javascript' src='${baseurl}dwr/util.js'></script>  
 <script type='text/javascript' src='${baseurl}dwr/interface/dwrService.js'></script>
 
- --%>

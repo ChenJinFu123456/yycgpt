@@ -86,7 +86,7 @@ var columns = [ [{
 	//select下拉框(供货商药品控制状态列表)
 	formatter : function (value,row,index){
 		return '<select  name="gysypmls['+index+'].control" style="width:80px">'
-				+'<option value="" checked></option>'
+				+'<option value="" checked>请选择</option>'
 			<c:forEach items="${controllist}" var="value">
 				+'<option value="${value.dictcode}">${value.info}</option>'
 			</c:forEach>

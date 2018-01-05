@@ -17,7 +17,13 @@
 	<context:component-scan base-package="yycgpt.**.action" />
 
 	<!-- 处理器映射器和适配器，可以使用mvc注解驱动 -->
-	<mvc:annotation-driven />
+	<!-- 注解驱动 -->
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<bean class="yycgpt.base.action.converters.UserArgumentResolver" />
+		</mvc:argument-resolvers>
+
+	</mvc:annotation-driven>
 
 	<!-- 拦截器 -->
 	<mvc:interceptors>
@@ -39,6 +45,19 @@
 		<property name="prefix" value="/WEB-INF/jsp" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
+	<!-- 自定义注册属性编辑器 -->
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="yycgpt.base.action.converters.DateConverter" />
+				<bean class="yycgpt.base.action.converters.DatetimeConverter" />
+				<bean class="yycgpt.base.action.converters.StringTrimConverter" />
+			</list>
+		</property>
+	</bean>
+
 
 	<!-- json转换器 -->
 	<bean id="jsonMessageConverter"

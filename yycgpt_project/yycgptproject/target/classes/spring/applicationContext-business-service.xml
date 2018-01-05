@@ -25,4 +25,6 @@
 	<bean id="gysypmlControlService" class="yycgpt.business.service.impl.GysypmlControlServiceImpl"></bean>
 	<!-- 采购单 -->
 	<bean id="cgdService" class="yycgpt.business.service.impl.CgdServiceImpl"></bean>
+	<!-- 交易明细 -->
+	<bean id="usinessService" class="yycgpt.business.service.impl.BusinessServiceImpl"></bean>
 </beans>

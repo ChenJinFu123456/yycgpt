@@ -19,4 +19,6 @@
 	</bean>
 	<!-- 系统管理 -->
 	<bean id="systemConfigService" class="yycgpt.base.service.impl.SystemConfigServiceImpl"></bean>
+	<!-- dwr -->
+	<bean id="dwrService" class="yycgpt.base.service.impl.DwrServiceImpl"></bean>
 </beans>

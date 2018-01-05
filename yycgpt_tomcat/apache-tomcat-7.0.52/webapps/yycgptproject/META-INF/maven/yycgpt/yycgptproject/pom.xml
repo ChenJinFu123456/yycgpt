@@ -96,6 +96,18 @@
 			<version>3.0.M1</version>
 		</dependency>
 
+		<!-- jfreechart -->
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.23</version>
+		</dependency>
+		<dependency>
+			<artifactId>jfreechart</artifactId>
+			<groupId>org.jfree</groupId>
+			<version>1.0.19</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>yycgptproject</finalName>
@@ -121,32 +133,32 @@
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
 				</configuration>
 			</plugin>
-			
+
 			<!-- tomcat运行插件 -->
 			<plugin>
-              <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
-  			  <version>1.2.3</version>
-  			  <configuration>
-  			      <container>
-  			          <containerId>tomcat7x</containerId>
-  			          <home>D:/yycgpt/yycgpt_tomcat/apache-tomcat-7.0.52</home>
-  			      </container>
-  			      <configuration>
-  			          <type>existing</type>
-  			          <home>D:/yycgpt/yycgpt_tomcat/apache-tomcat-7.0.52</home>
-  			      </configuration>
-  			  </configuration>
-  			  <executions>  
-                  <execution>  
-                      <id>cargo-run</id>  
-                      <phase>install</phase>  
-                      <goals>  
-                          <goal>run</goal>  
-                      </goals>  
-                  </execution>  
-              </executions>
-          </plugin>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.2.3</version>
+				<configuration>
+					<container>
+						<containerId>tomcat7x</containerId>
+						<home>D:/yycgpt/yycgpt_tomcat/apache-tomcat-7.0.52</home>
+					</container>
+					<configuration>
+						<type>existing</type>
+						<home>D:/yycgpt/yycgpt_tomcat/apache-tomcat-7.0.52</home>
+					</configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<id>cargo-run</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 		</plugins>
 

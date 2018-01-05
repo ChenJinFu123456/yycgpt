@@ -2,25 +2,40 @@ package yycgpt.business.pojo.vo;
 
 import java.util.List;
 
+import yycgpt.base.pojo.po.Usergys;
 import yycgpt.base.pojo.po.Useryy;
 import yycgpt.base.pojo.vo.PageQuery;
 
 public class CgdQueryVo {
 	private String businessyear;
-	//分页
+	// 分页
 	private PageQuery pageQuery;
-	//采购单的基本信息
+	// 采购单的基本信息
 	private YycgdCustom yycgdCustom;
-	//采购单的明细
+	// 采购单的明细
 	private YyCgdMxCustom yyCgdMxCustom;
-	//产品信息
+	// 产品信息
 	private YpxxCustom ypxxCustom;
-	//供应商产品目录
+	// 供应商产品目录
 	private GysypmlCustom gysypmlCustom;
-	//医院的区域id扩充到useryy中
+	// 医院的区域id扩充到useryy中
 	private Useryy useryy;
-	//接受页面的批量参数
+	//供应商
+	private Usergys usergys;
+	public Usergys getUsergys() {
+		return usergys;
+	}
+
+	public void setUsergys(Usergys usergys) {
+		this.usergys = usergys;
+	}
+
+	// 接受页面的批量参数
 	private List<YyCgdMxCustom> yyCgdMxCustoms;
+	// 批量提交采购单审核
+	private List<YycgdCustom> yycgdCustoms;
+	//批量入库信息
+	private List<YycgdrkCustom> yycgdrkCustoms;
 	public YycgdCustom getYycgdCustom() {
 		return yycgdCustom;
 	}
@@ -61,7 +76,6 @@ public class CgdQueryVo {
 		this.pageQuery = pageQuery;
 	}
 
-
 	public Useryy getUseryy() {
 		return useryy;
 	}
@@ -86,6 +100,20 @@ public class CgdQueryVo {
 		this.yyCgdMxCustoms = yyCgdMxCustoms;
 	}
 
-	
-	
+	public List<YycgdCustom> getYycgdCustoms() {
+		return yycgdCustoms;
+	}
+
+	public void setYycgdCustoms(List<YycgdCustom> yycgdCustoms) {
+		this.yycgdCustoms = yycgdCustoms;
+	}
+
+	public List<YycgdrkCustom> getYycgdrkCustoms() {
+		return yycgdrkCustoms;
+	}
+
+	public void setYycgdrkCustoms(List<YycgdrkCustom> yycgdrkCustoms) {
+		this.yycgdrkCustoms = yycgdrkCustoms;
+	}
+
 }

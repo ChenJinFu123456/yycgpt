@@ -173,7 +173,7 @@ function initGrid(){
 		getDictinfoCodelist('010','yycgdCustom.zt');
 		//加载年
 		businessyearlist('year');
-	
+	 
 
 	});
 	//调用的是dwrService中的testdwr方法
@@ -194,9 +194,10 @@ function initGrid(){
 			<TABLE  class="table_search">
 				<TBODY>
 					<TR>
-						<TD class="left">年份(如2014)：</TD>
+						<TD class="left">年份(如201411)：</TD>
 						<td >
 						<select name="year" id="year">
+						<!-- <option value="2017">2017</option> -->
 						</select>
 						
 						</td>

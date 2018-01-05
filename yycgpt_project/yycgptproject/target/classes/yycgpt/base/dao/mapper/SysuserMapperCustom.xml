@@ -30,6 +30,39 @@
 	</sql>
 
 
+	<!-- 医院的查询条件 -->
+	<sql id="query_useryy_where">
+		<if test="useryy!=null">
+			<if test="useryy.mc!=null and useryy.mc!=''"> and useryy.mc like 
+				'%${useryy.mc}%' </if>
+
+			<if test="useryy.id!=null and useryy.id!=''">
+				and useryy.id = #{useryy.id}
+
+			</if>
+			<!-- 根据医院的区域查询医院的信息 -->
+			<if test="useryy.dq!=null and useryy.dq!=''">
+				and useryy.id in (
+				select useryy.id from useryy where
+				useryy.dq like '${useryy.dq}%'
+				)
+			</if>
+		</if>
+	</sql>
+
+	<!-- 供货商查询条件 -->
+	<sql id="query_usergys_where">
+		<if test="usergys!=null">
+			<if test="usergys.mc!=null and usergys.mc!=''">
+				and usergys.mc like '%${usergys.mc}%'
+			</if>
+			<if test="usergys.id!=null and usergys.id!=''">
+				and usergys.id = #{usergys.id}
+			</if>
+
+		</if>
+
+	</sql>
 	<!-- 用户的查询 -->
 
 	<select id="findSysuserList" parameterType="yycgpt.base.pojo.vo.SysuserQueryVo"
@@ -47,12 +80,14 @@
 		SYSUSER.username,
 		SYSUSER.groupid,
 
-		(select info from dictinfo where dictcode= SYSUSER.groupid and
+		(select info from dictinfo where dictcode=
+		SYSUSER.groupid and
 		typecode='s01') as groupname,
 
 		SYSUSER.userstate,
 
-		(select info from dictinfo where dictcode= SYSUSER.userstate and typecode =
+		(select info from dictinfo where dictcode= SYSUSER.userstate and
+		typecode =
 		'yhzt') as statename,
 
 		SYSUSER.sysid,
@@ -62,7 +97,8 @@
 		from userjd where id =
 		sysuser.sysid),
 		'2',
-		(select mc from userjd where
+		(select mc from
+		userjd where
 		id = sysuser.sysid),
 		'3',
 		(select mc from useryy where id =

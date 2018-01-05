@@ -1,6 +1,5 @@
 package yycgpt.business.pojo.vo;
 
-import java.util.Date;
 
 public class YpxxFail {
 
