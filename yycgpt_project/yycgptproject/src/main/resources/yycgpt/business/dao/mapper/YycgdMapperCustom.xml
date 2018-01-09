@@ -94,10 +94,18 @@
 		ypxx.scqymc,
 		ypxx.spmc,
 		ypxx.jyzt,
+		<!-- 管理类别 -->
+		ypxx.lb,
+		(select info
+		from dictinfo
+		where ypxx.lb = dictinfo.id
+		and
+		dictinfo.typecode = '001') as lbmc,
 
 		<!-- 采购单产品受理扩张字段 yycgdbm：也是采购单的id -->
 		yycgd.bm as yycgdbm,
 		yycgd.mc as yycgdmc,
+		yycgd.id as yycgdid,
 		yycgd.cjtime,
 		(select info
 		from
@@ -129,8 +137,7 @@
 		and
 		dictinfo.typecode =
 		'011') as cgztmc,
-		usergys.mc as
-		usergysmc,
+		usergys.mc as usergysmc,
 		usergys.id as usergysid
 
 		from
@@ -170,19 +177,22 @@
 		<!-- 分页尾 -->
 	</select>
 
-	<!-- 采购单产品明细统计查询列表 -->
+	<!-- 采购单产品明细统计查询列表 统计采购总金额和采购总量 -->
 	<select id="findYyCgdMxListSum" resultType="yycgpt.business.pojo.vo.YyCgdMxCustom"
 		parameterType="yycgpt.business.pojo.vo.CgdQueryVo">
 
 		select
 		sum(nvl(yycgdmx.cgl,0)) as cgl,
 		sum(nvl(yycgdmx.cgje,0)) as cgje
-		from yycgdmx${businessyear} yycgdmx, yycgd${businessyear} yycgd, useryy, ypxx, usergys
+		from yycgdmx${businessyear} yycgdmx, yycgd${businessyear} yycgd,
+		useryy, ypxx, usergys
 		where yycgdmx.yycgdid = yycgd.id
-		and yycgd.useryyid = useryy.id
+		and
+		yycgd.useryyid = useryy.id
 		and yycgdmx.ypxxid = ypxx.id
-		and yycgdmx.usergysid = usergys.id
-		
+		and
+		yycgdmx.usergysid = usergys.id
+
 		<!-- 查询条件 -->
 		<!-- 采购单明细查询条件 -->
 		<include refid="query_yycgdmx_where"></include>
@@ -258,18 +268,29 @@
 		ypxx.scqymc,
 		ypxx.spmc,
 		ypxx.zbjg,
-		ypxx.jyzt,
+		ypxx.lb,
 		(select info
 		from dictinfo
+		where ypxx.lb = dictinfo.id
+		and
+		dictinfo.typecode = '001') as lbmc,
+		ypxx.jyzt,
+		(select info
+		from
+		dictinfo
 		where ypxx.jyzt = dictinfo.dictcode
 		and
-		dictinfo.typecode = '003') as jyztmc
+		dictinfo.typecode =
+		'003') as
+		jyztmc
 
 		from gysypml, usergys,
 		gysypml_control, ypxx
-		where gysypml.usergysid = usergys.id
+		where
+		gysypml.usergysid = usergys.id
 		and
-		gysypml.ypxxid = gysypml_control.ypxxid
+		gysypml.ypxxid =
+		gysypml_control.ypxxid
 		and gysypml.usergysid =
 		gysypml_control.usergysid
 		and gysypml.ypxxid = ypxx.id
@@ -370,7 +391,7 @@
 			from (
 		</if>
 		<!-- 分页头 -->
-		
+
 		select useryy.mc as useryymc,
 		yycgd.*,
 		(select info
@@ -419,6 +440,25 @@
 		<include
 			refid="yycgpt.base.dao.mapper.SysuserMapperCustom.query_useryy_where"></include>
 		<!-- 查询条件 -->
+	</select>
+
+	<select id="findYyRkListSum" parameterType="yycgpt.business.pojo.vo.CgdQueryVo"
+		resultType="yycgpt.business.pojo.vo.YyCgdMxCustom">
+
+		select
+		sum(nvl(yycgdmx.cgl,0)) as cgl,
+		sum(nvl(yycgdmx.cgje,0)) as cgje
+		from yycgdmx${businessyear} yycgdmx
+
+		where yycgdmx.yycgdid in(
+
+		select id from yycgd${businessyear} yycgd
+		where
+		yycgd.useryyid=${useryy.id}
+		)
+		and
+		yycgdmx.cgzt=${yyCgdMxCustom.cgzt}
+
 	</select>
 
 </mapper>

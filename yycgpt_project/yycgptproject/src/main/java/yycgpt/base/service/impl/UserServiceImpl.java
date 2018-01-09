@@ -33,8 +33,26 @@ import yycgpt.utils.UUIDBuild;
 
 public class UserServiceImpl implements UserService {
 
-	// 校验用户的信息 userId：帐号
+	// 注入mapper
+	@Autowired
+	private SysuserMapper sysuserMapper;
 
+	@Autowired
+	private SysuserMapperCustom sysuserMapperCustom;
+
+	// 监督单位
+	@Autowired
+	private UserjdMapper userjdMapper;
+
+	// 医院、卫生室
+	@Autowired
+	private UseryyMapper useryyMapper;
+
+	// 供应商
+	@Autowired
+	private UsergysMapper usergysMapper;
+
+	// 校验用户的信息 userId：帐号
 	public ActiveUser checkUserInfo(String userId, String pwd) throws Exception {
 		// 用户是否存在
 		Sysuser sysuser = this.findSysuserByUserId(userId);
@@ -68,12 +86,16 @@ public class UserServiceImpl implements UserService {
 		String sysid = sysuser.getSysid();
 
 		// 单位名称非空
-		if (sysid.equals("") || sysid == null) {
+		if (!userId.equals("admin") && (sysid == null || sysid.equals(""))) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 222,
 					null));
 		}
 
-		if (groupId.equals("1") || groupId.equals("2")) {
+		if (groupId == null || groupId.equals("")) {
+			// 用户类型非空
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
+					null));
+		} else if (groupId.equals("1") || groupId.equals("2")) {
 			// 监督单位
 			// 根据单位id查询单位的名称
 			Userjd userjd = userjdMapper.selectByPrimaryKey(sysid);
@@ -101,35 +123,12 @@ public class UserServiceImpl implements UserService {
 						223, null));
 			}
 			sysmc = usergys.getMc();
-		} else if (groupId.equals("") || groupId == null) {
-			// 用户类型非空
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
-					null));
 		}
 
 		activeUser.setSysmc(sysmc);
-		
+
 		return activeUser;
 	}
-
-	// 注入mapper
-	@Autowired
-	private SysuserMapper sysuserMapper;
-
-	@Autowired
-	private SysuserMapperCustom sysuserMapperCustom;
-
-	// 监督单位
-	@Autowired
-	private UserjdMapper userjdMapper;
-
-	// 医院、卫生室
-	@Autowired
-	private UseryyMapper useryyMapper;
-
-	// 供应商
-	@Autowired
-	private UsergysMapper usergysMapper;
 
 	public List<SysuserCustom> findSysuserList(SysuserQueryVo sysuserQueryVo)
 			throws Exception {
@@ -143,6 +142,11 @@ public class UserServiceImpl implements UserService {
 
 	// 根据用户帐号查询用户
 	public Sysuser findSysuserByUserId(String userid) throws Exception {
+		if (userid == null || userid.equals("")) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 110,
+					null));
+		}
+
 		SysuserExample sysuserExample = new SysuserExample();
 		SysuserExample.Criteria criteria = sysuserExample.createCriteria();
 		// 根据用户的帐号查询,添加查询条件
@@ -197,17 +201,17 @@ public class UserServiceImpl implements UserService {
 		// 判断帐号的唯一性
 		Sysuser sysuser = this.findSysuserByUserId(sysuserCustom.getUserid());
 		// 用户名称
-		if (sysuserCustom.getUsername().equals("")
-				|| sysuserCustom.getUsername() == null) {
+		if (sysuserCustom.getUsername() == null
+				|| sysuserCustom.getUsername().equals("")) {
 			// 抛出自定义异常
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 218,
 					null));
 
 		}
 		// 用户密码
-		String pwd = sysuserCustom.getPwd().trim();
-		String repwd = sysuserCustom.getRepwd().trim();
-		if (pwd.equals("") || pwd == null) {
+		String pwd = sysuserCustom.getPwd();
+		String repwd = sysuserCustom.getRepwd();
+		if (pwd == null || pwd.equals("")) {
 			// 抛出自定义异常
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 219,
 					null));
@@ -226,8 +230,8 @@ public class UserServiceImpl implements UserService {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 213,
 					null));
 
-		} else if (sysuserCustom.getUserid().equals("")
-				|| sysuserCustom.getUserid() == null) {
+		} else if (sysuserCustom.getUserid() == null
+				|| sysuserCustom.getUserid().equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 220,
 					null));
 
@@ -247,18 +251,21 @@ public class UserServiceImpl implements UserService {
 					null));
 
 		}
-		if (sysmc.equals("") || sysmc == null) {
+		if (sysmc == null || sysmc.equals("")) {
 			// throw new Exception("请输入单位名称");
 			// 抛出自定义异常
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 222,
 					null));
 
 		}
-		
-		//卫生局和卫生院都是监督单位
+
+		// 卫生局和卫生院都是监督单位
 		// 单位id/sysid
 		String sysId = null;
-		if (groupId.equals("1") || groupId.equals("2")) {
+		if (groupId == null || groupId.equals("")) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
+					null));
+		} else if (groupId.equals("1") || groupId.equals("2")) {
 			// 监督单位：卫生局，卫生院
 			// 根据单位名称查询单位的信息
 			Userjd userjd = this.findUserJdByMc(sysmc);
@@ -289,8 +296,12 @@ public class UserServiceImpl implements UserService {
 						223, null));
 			}
 			sysId = usergys.getId();
-		} else if (groupId.equals("") || groupId == null) {
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
+		}
+
+		// 性别
+		String sex = sysuserCustom.getSex();
+		if (sex == null || sex.equals("")) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 115,
 					null));
 		}
 
@@ -306,7 +317,7 @@ public class UserServiceImpl implements UserService {
 
 		// 先查询
 		Sysuser sysuser = sysuserMapper.selectByPrimaryKey(userId);
-		if (sysuser.equals("") || sysuser == null) {
+		if (sysuser == null || sysuser.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 212,
 					null));
 		}
@@ -321,14 +332,14 @@ public class UserServiceImpl implements UserService {
 		 */
 
 		// 状态非空
-		String userState = sysuserCustom.getUserstate().trim();
+		String userState = sysuserCustom.getUserstate();
 		if (userState == null || userState.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 221,
 					null));
 		}
 		// 用户名称非空
-		if (sysuserCustom.getUsername().equals("")
-				|| sysuserCustom.getUsername() == null) {
+		if (sysuserCustom.getUsername() == null
+				|| sysuserCustom.getUsername().equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 218,
 					null));
 		}
@@ -337,9 +348,9 @@ public class UserServiceImpl implements UserService {
 		 * 1.判断帐号是否被修改 2.如果帐号已经被修改，是否与系统已经存在的帐号重复
 		 */
 		// 页面提交的帐号
-		String userId_page = sysuserCustom.getUserid().trim();
+		String userId_page = sysuserCustom.getUserid();
 		// 帐号非空
-		if (userId_page.equals("") || userId_page == null) {
+		if (userId_page == null || userId_page.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 220,
 					null));
 		}
@@ -374,12 +385,16 @@ public class UserServiceImpl implements UserService {
 		String sysId = null;
 
 		// 单位名称非空
-		if (sysmc.equals("") || sysmc == null) {
+		if (sysmc == null || sysmc.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 222,
 					null));
 		}
 
-		if (groupId.equals("1") || groupId.equals("2")) {
+		if (groupId == null || groupId.equals("")) {
+			// 用户类型非空
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
+					null));
+		} else if (groupId.equals("1") || groupId.equals("2")) {
 			// 监督单位
 			// 根据单位名称查询单位的信息
 			Userjd userjd = this.findUserJdByMc(sysmc);
@@ -407,19 +422,15 @@ public class UserServiceImpl implements UserService {
 						223, null));
 			}
 			sysId = usergys.getId();
-		} else if (groupId.equals("") || groupId == null) {
-			// 用户类型非空
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
-					null));
 		}
 		/**
 		 * 密码修改 如果从页面提交的密码为空，就说明用户不修改密码
 		 */
 
 		// 用户密码
-		String pwd = sysuserCustom.getPwd().trim();
-		String repwd = sysuserCustom.getRepwd().trim();
-		if (pwd.equals("") || pwd == null) {
+		String pwd = sysuserCustom.getPwd();
+		String repwd = sysuserCustom.getRepwd();
+		if (pwd == null || pwd.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 219,
 					null));
 
@@ -429,6 +440,14 @@ public class UserServiceImpl implements UserService {
 		} else {// 对密码进行加密
 			sysuserCustom.setPwd(new MD5().getMD5ofStr(pwd));
 		}
+
+		// 性别
+		String sex = sysuserCustom.getSex();
+		if (sex == null || sex.equals("")) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 115,
+					null));
+		}
+
 		/*
 		 * 先查后更新 设置更新的用户信息
 		 */
@@ -442,6 +461,9 @@ public class UserServiceImpl implements UserService {
 		sysuser_update.setUserstate(sysuserCustom.getUserstate());// 状态
 		sysuser_update.setPwd(sysuserCustom.getPwd());// 密码
 		sysuser_update.setUsername(sysuserCustom.getUsername());// 用户名
+		
+		sysuser_update.setPhone(sysuserCustom.getPhone());//电话
+		sysuser_update.setSex(sex);//性别
 		if (sysId != null) {// 用户类型
 			sysuser_update.setSysid(sysId);
 		} else {
@@ -464,12 +486,16 @@ public class UserServiceImpl implements UserService {
 		String sysid = sysuser.getSysid();
 
 		// 单位名称非空
-		if (sysid.equals("") || sysid == null) {
+		if (sysid == null || sysid.equals("")) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 222,
 					null));
 		}
 
-		if (groupId.equals("1") || groupId.equals("2")) {
+		if (groupId == null || groupId.equals("")) {
+			// 用户类型非空
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
+					null));
+		} else if (groupId.equals("1") || groupId.equals("2")) {
 			// 监督单位
 			// 根据单位id查询单位的名称
 			Userjd userjd = userjdMapper.selectByPrimaryKey(sysid);
@@ -497,10 +523,6 @@ public class UserServiceImpl implements UserService {
 						223, null));
 			}
 			sysmc = usergys.getMc();
-		} else if (groupId.equals("") || groupId == null) {
-			// 用户类型非空
-			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 224,
-					null));
 		}
 
 		SysuserCustom sysuserCustom = new SysuserCustom();

@@ -63,6 +63,7 @@
 		 */
 		message_alert(data);
 		if (data.resultInfo.type == '1') {
+			parent.queryuser();
 			//延时一秒执行
 			setTimeout("parent.closemodalwindow()", 1000);
 		}
@@ -80,7 +81,7 @@
 			<TBODY>
 				<TR>
 					<TD background=images/r_0.gif width="100%">
-						<TABLE cellSpacing=0 cellPadding=0 width="100%">
+						<TABLE cellSpacing=0 cellPadding=0 width="100%" >
 							<TBODY>
 								<TR>
 									<TD>&nbsp;系统用户信息</TD>
@@ -159,6 +160,32 @@
 										type="radio" name="sysuserCustom.userstate" value="0" />暂停</TD>
 
 								</TR>
+
+								<tr>
+									<TD height=30 width="15%" align=right>用户性别：</TD>
+									<TD class=category width="35%">
+										<div>
+											<select name="sysuserCustom.sex" id="sysuser_groupid">
+												<option value="">请选择</option>
+												<option value="1">男</option>
+												<option value="0">女</option>
+												<div id="sysuser_groupidTip"></div>
+											</select>
+										</div>
+									</TD>
+
+									<TD height=30 width="15%" align=right>用户电话：</TD>
+									<TD class=category width="35%">
+										<div>
+											<input type="text" id="sysuser_username"
+												name="sysuserCustom.phone" />
+										</div>
+										<div id="sysuser_usernameTip"></div>
+									</TD>
+
+								</tr>
+
+
 								<tr>
 									<td colspan=4 align=center class=category><a
 										id="submitbtn" class="easyui-linkbutton" iconCls="icon-ok"

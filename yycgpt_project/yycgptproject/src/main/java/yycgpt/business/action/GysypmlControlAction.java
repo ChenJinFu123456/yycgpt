@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import yycgpt.base.action.SubmitResultInfo;
+import yycgpt.base.pojo.vo.ActiveUser;
 import yycgpt.base.pojo.vo.PageQuery;
 import yycgpt.base.process.context.Config;
 import yycgpt.base.process.result.DataGridResultInfo;
@@ -70,9 +71,15 @@ public class GysypmlControlAction {
 	DataGridResultInfo queryGhsYpmlControlResult(HttpSession httpSession,
 			GysypmlControlQueryVo gysypmlControlQueryVo,// 查询条件
 			int page, int rows) throws Exception {
+		//获得监督单位的区域
+		ActiveUser activeUser = (ActiveUser) httpSession
+				.getAttribute(Config.ACTIVEUSER_KEY);
+		//获取监督单位的id
+		String userjdid = activeUser.getSysid();
+		
 		// 取列表的总数
 		int total = gysypmlControlService
-				.findGysYpmlControlCount(gysypmlControlQueryVo);
+				.findGysYpmlControlCount(gysypmlControlQueryVo,userjdid);
 
 		// 分页的参数
 		PageQuery pageQuery = new PageQuery();
@@ -82,7 +89,7 @@ public class GysypmlControlAction {
 
 		// 分页查询列表
 		List<GysypmlControlCustom> list = gysypmlControlService
-				.findGysYpmlControlList(gysypmlControlQueryVo);
+				.findGysYpmlControlList(gysypmlControlQueryVo,userjdid);
 
 		DataGridResultInfo dataGridResultInfo = new DataGridResultInfo();
 		dataGridResultInfo.setTotal(total);

@@ -44,6 +44,11 @@ public class UserAction {
 		//用户状态
 		List<Dictinfo> stateList = systemConfigService.findDictinfoByType("yhzt");
 		model.addAttribute("stateList",stateList);
+		
+		//用户性别
+		List<Dictinfo> sexList = systemConfigService.findDictinfoByType("yhxb");
+		model.addAttribute("sexList",sexList);
+		
 		return "/base/user/queryuser";
 	}
 

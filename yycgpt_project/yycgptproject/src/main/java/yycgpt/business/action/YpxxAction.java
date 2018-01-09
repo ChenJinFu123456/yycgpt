@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +18,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import yycgpt.base.action.SubmitResultInfo;
 import yycgpt.base.pojo.po.Dictinfo;
+import yycgpt.base.pojo.vo.ActiveUser;
 import yycgpt.base.pojo.vo.PageQuery;
 import yycgpt.base.process.context.Config;
 import yycgpt.base.process.result.DataGridResultInfo;
+import yycgpt.base.process.result.ExceptionResultInfo;
+import yycgpt.base.process.result.ResultInfo;
 import yycgpt.base.process.result.ResultUtil;
 import yycgpt.base.service.SystemConfigService;
+import yycgpt.business.pojo.vo.GysypmlQueryVo;
 import yycgpt.business.pojo.vo.YpxxCustom;
 import yycgpt.business.pojo.vo.YpxxFail;
 import yycgpt.business.pojo.vo.YpxxQueryVo;
@@ -63,7 +69,7 @@ public class YpxxAction {
 	@RequestMapping("/exportYpxx")
 	public String exportYpxx(Model model) throws Exception {
 
-		// 药品类别
+		// 产品类别
 		List<Dictinfo> yplblist = systemConfigService.findDictinfoByType("001");
 
 		// 交易状态
@@ -78,7 +84,8 @@ public class YpxxAction {
 	// 导出提交
 	@RequestMapping("/exportYpxxSumbit")
 	public @ResponseBody
-	SubmitResultInfo exportYpxxSumbit(YpxxQueryVo ypxxQueryVo,int[] indexs) throws Exception {
+	SubmitResultInfo exportYpxxSumbit(YpxxQueryVo ypxxQueryVo, int[] indexs)
+			throws Exception {
 		// 调用封装
 		// 导出文件存放的路径，并且是虚拟目录指向的路径
 		// String filePath = "d:/upload/linshi/";
@@ -91,26 +98,34 @@ public class YpxxAction {
 		int flushRows = 100;
 
 		// 导出数据的title
+		/**
+		 * 
+		 * 流水号 通用名 规格 中标价格 生产企业 交易状态 管理类别
+		 * 
+		 * 
+		 */
+
 		List<String> fieldNames = new ArrayList<String>();
 		fieldNames.add("流水号");
 		fieldNames.add("通用名");
-		fieldNames.add("剂型");
+		// fieldNames.add("剂型");
 		fieldNames.add("规格");
-		fieldNames.add("转换系数");
-		fieldNames.add("生产企业");
+		// fieldNames.add("转换系数");
 		fieldNames.add("中标价格");
+		fieldNames.add("生产企业");
 		fieldNames.add("交易状态");
+		fieldNames.add("管理类别");
 		// 告诉导出类数据list中对象的属性，让ExcelExportSXXSSF通过反射获取对象的值
 		List<String> fieldCodes = new ArrayList<String>();
-		fieldCodes.add("bm");// 药品流水号
+		fieldCodes.add("bm");// 产品流水号
 		fieldCodes.add("mc");// 通用名
-		fieldCodes.add("jx");
-		fieldCodes.add("gg");
-		fieldCodes.add("zhxs");
-		fieldCodes.add("scqymc");
-		fieldCodes.add("zbjg");
-		fieldCodes.add("jyztmc");
-
+		// fieldCodes.add("jx");
+		fieldCodes.add("gg");// 规格
+		fieldCodes.add("zbjg");// 中标价格
+		// fieldCodes.add("zhxs");
+		fieldCodes.add("scqymc");// 生产企业名称
+		fieldCodes.add("jyztmc");// 交易状态
+		fieldCodes.add("lbmc");// 类别名称
 		// 注意：fieldCodes和fieldNames个数必须相同且属性和title顺序一一对应，这样title和内容才一一对应
 
 		// 开始导出，执行一些workbook及sheet等对象的初始创建
@@ -118,36 +133,35 @@ public class YpxxAction {
 				"/upload/", filePrefix, fieldNames, fieldCodes, flushRows);
 
 		/**
-		 * 导出多选的数据，如果indexs没有选中，直接导出查询的数据
-		 * 如果有选中，则导出选中的数据
+		 * 导出多选的数据，如果indexs没有选中，直接导出查询的数据 如果有选中，则导出选中的数据
 		 */
 		List<YpxxCustom> list = new ArrayList<YpxxCustom>();
-		if(indexs==null||indexs.length==0){
+		if (indexs == null || indexs.length == 0) {
 			list = ypxxService.findYpxxList(ypxxQueryVo);
-		}else{
-			//获取当页所有的数据
+		} else {
+			// 获取当页所有的数据
 			List<YpxxCustom> ypxxCustoms = ypxxQueryVo.getYpxxs();
 			String ypxxId = null;
 			List<YpxxCustom> _ypxxCustoms = null;
 			YpxxQueryVo _ypxxQueryVo = new YpxxQueryVo();
 			YpxxCustom _ypxxCustom = new YpxxCustom();
-			for(int i = 0;i<indexs.length;i++){
-				//获取ypxxId
-				ypxxId=ypxxCustoms.get(indexs[i]).getId();
-				//设置查询条件
+			for (int i = 0; i < indexs.length; i++) {
+				// 获取ypxxId
+				ypxxId = ypxxCustoms.get(indexs[i]).getId();
+				// 设置查询条件
 				_ypxxCustom.setId(ypxxId);
 				_ypxxQueryVo.setYpxxCustom(_ypxxCustom);
-				//根据主键找出记录
+				// 根据主键找出记录
 				_ypxxCustoms = ypxxService.findYpxxList(_ypxxQueryVo);
-				if(_ypxxCustoms==null||_ypxxCustoms.size()==0){
+				if (_ypxxCustoms == null || _ypxxCustoms.size() == 0) {
 					// 不存在
-					ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 316,
-							null));
+					ResultUtil.throwExcepion(ResultUtil.createFail(
+							Config.MESSAGE, 316, null));
 				}
 				list.add(_ypxxCustoms.get(0));
 			}
 		}
-		
+
 		// 执行导出
 		excelExportSXXSSF.writeDatasByObject(list);
 		// 输出文件，返回下载文件的http地址
@@ -192,7 +206,7 @@ public class YpxxAction {
 			// 第三个参数导入接口的实现类对象
 			xls2csv = new HxlsRead(absolutePath, 1, hxlsOptRowsInterface);
 			xls2csv.process();
-			// 需要提示导入成功的提示
+			// 需要提示导入成功
 			long successRow = xls2csv.getOptRows_success();
 			long failureRow = xls2csv.getOptRows_failure();
 			/**
@@ -213,13 +227,11 @@ public class YpxxAction {
 					YpxxFail ypxxFail = new YpxxFail();
 					// List<String> ==> Ypxxfail
 					ypxxFail.setMc(listStr.get(0));
-					ypxxFail.setJx(listStr.get(1));
-					ypxxFail.setGg(listStr.get(2));
-					ypxxFail.setZhxs(listStr.get(3));
-					ypxxFail.setScqymc(listStr.get(4));
-					ypxxFail.setSpmc(listStr.get(5));
-					ypxxFail.setZbjg(listStr.get(6));
-					ypxxFail.setJyztmc(listStr.get(7));
+					ypxxFail.setGg(listStr.get(1));
+					ypxxFail.setZbjg(listStr.get(2));
+					ypxxFail.setScqymc(listStr.get(3));
+					ypxxFail.setJyzt(listStr.get(4));
+					ypxxFail.setLb(listStr.get(5));
 					// 错误提示信息
 					ypxxFail.setMsg(failmsgs.get(i));
 					ypxxFails.add(ypxxFail);
@@ -232,13 +244,11 @@ public class YpxxAction {
 				// 告诉导出类数据list中对象的属性，让ExcelExportSXXSSF通过反射获取对象的值
 				List<String> fieldCodes = new ArrayList<String>();
 				fieldCodes.add("mc");// 通用名
-				fieldCodes.add("jx");// 剂型
 				fieldCodes.add("gg");// 规格
-				fieldCodes.add("zhxs");
-				fieldCodes.add("scqymc");
-				fieldCodes.add("spmc");
 				fieldCodes.add("zbjg");
-				fieldCodes.add("jyztmc");
+				fieldCodes.add("scqymc");
+				fieldCodes.add("jyzt");
+				fieldCodes.add("lb");
 				fieldCodes.add("msg");// 错误提示信息
 				// -1表示关闭自动刷新，手动控制写磁盘的时机，其它数据表示多少数据在内存保存，超过的则写入磁盘
 				int flushRows = 100;
@@ -294,6 +304,35 @@ public class YpxxAction {
 		dataGridResultInfo.setTotal(total);
 		dataGridResultInfo.setRows(list);
 		return dataGridResultInfo;
+	}
+
+	// 修改产品信息的jsp
+	@RequestMapping("/editYpxx")
+	public String editYpxx(Model model, String id) throws Exception {
+		YpxxCustom ypxxCustom = ypxxService.findYpxxById(id);
+
+		model.addAttribute("ypxxCustom", ypxxCustom);
+		return "/business/ypml/editYpxx";
+	}
+
+	// 修改产品信息提交
+	@RequestMapping("/editYpxxSubmit")
+	public @ResponseBody
+	SubmitResultInfo editYpxxSubmit(String id, YpxxQueryVo ypxxQueryVo)
+			throws Exception {
+		ypxxService.updateYpxx(id, ypxxQueryVo.getYpxxCustom());
+		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(
+				Config.MESSAGE, 906, null));
+	}
+
+	//删除产品信息
+	@RequestMapping("/delypxxsubmit")
+	public @ResponseBody
+	SubmitResultInfo delYpxxSubmit(String ypxxid) throws Exception {
+
+		ypxxService.deleteYpxxById(ypxxid);
+		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(
+				Config.MESSAGE, 906, null));
 	}
 
 }

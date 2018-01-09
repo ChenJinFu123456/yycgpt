@@ -14,7 +14,7 @@
 <script type="text/javascript">
 
 var yycgddisposesubmit = function(){
-	_confirm('您确定要对选择的药品发货吗?',null,
+	_confirm('您确定要对选择的产品发货吗?',null,
 	  function(){
 		
 		var indexs = [];//提交记录的序号
@@ -27,7 +27,7 @@ var yycgddisposesubmit = function(){
 			$("#indexs").val(indexs.join(','));
 			jquerySubByFId('yycgddisposeForm', yycgddispose_callback, null);
 		}else{
-			alert_warn("请选择要发货的药品");
+			alert_warn("请选择要发货的产品");
 		}
 		
 	  }
@@ -64,7 +64,7 @@ var frozenColumns;
 var columns = [ [ {
 	checkbox:true
 },{
-	field : 'id',//药品信息id
+	field : 'id',//产品信息id
 	hidden : true,
 	formatter: function(value,row,index){
 		return '<input type="hidden" name="yyCgdMxCustoms['+index+'].ypxxid" value="'+value+'" />';
@@ -76,11 +76,6 @@ var columns = [ [ {
 	formatter: function(value,row,index){
 		return '<input type="hidden" name="yyCgdMxCustoms['+index+'].yycgdid" value="'+row.yycgdbm+'" />';
 	}
-},
- {
-	field : 'useryymc',
-	title : '医院名称',
-	width : 100
 },{
 	field : 'yycgdbm',
 	title : '采购单编号',
@@ -89,6 +84,10 @@ var columns = [ [ {
 	field : 'yycgdmc',
 	title : '采购单名称',
 	width : 150
+},{
+	field : 'useryymc',
+	title : '医院名称',
+	width : 100
 },{
 	field : 'cjtime',
 	title : '建单时间',
@@ -115,19 +114,19 @@ var columns = [ [ {
 	field : 'mc',
 	title : '通用名',
 	width : 100
-},{
+}/* ,{
 	field : 'jx',
 	title : '剂型',
 	width : 70
-},{
+} */,{
 	field : 'gg',
 	title : '规格',
 	width : 70
-},{
+}/* ,{
 	field : 'zhxs',
 	title : '转换系数',
 	width : 50
-},{
+} */,{
 	field : 'zbjg',
 	title : '中标价',
 	width : 50
@@ -142,19 +141,23 @@ var columns = [ [ {
 },{
 	field : 'cgje',
 	title : '采购金额',
-	width : 50
+	width : 60
+},{
+	field : 'lbmc',
+	title : '管理类别',
+	width : 60
 },{
 	field : 'cgztmc',
 	title : '采购状态', 
-	width : 60
-},{
+	width : 70
+}/* ,{
 	field : 'opt3',
 	title : '查看',
 	width : 60,
 	formatter:function(value, row, index){
 		return '<a href=javascript:yycgdinfo(\''+row.yycgdbm+'\')>查看</a>';
 	}
-}]];
+} */]];
 
 function initGrid(){
 	$('#yycgdmxlist').datagrid({
@@ -210,6 +213,7 @@ function initGrid(){
 					<TR>
 						<TD class="left">年份(如2017)：</TD>
 						<td ><select id="year" name="year">
+						<option  value="2018">2018</option>
 						<option  value="2017">2017</option>
 						</select></td>
 						<TD class="left">医院名称：</TD>
@@ -228,14 +232,23 @@ function initGrid(){
 						<td >
 						 <INPUT id="yycgdCustom.cjtime_start"
 							name="yycgdCustom.cjtime_start" 
-							 onfocus="WdatePicker({isShowWeek:false,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" style="width:80px"/>--
+							 onfocus="WdatePicker({isShowWeek:false,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" style="width:80px"/>
 					 <INPUT id="yycgdCustom.cjtime_end" 
 							name="yycgdCustom.cjtime_end"
 							 onfocus="WdatePicker({isShowWeek:false,skin:'whyGreen',dateFmt:'yyyy-MM-dd'})" style="width:80px"/>
 							
 						</td>
-						<TD class="left">流水号：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.bm" /></td>
+						<TD class="left">管理类别：</TD>
+						<td >
+							<!-- 产品类别从数据字典中取id作为页面传入action的value -->
+							<select id="ypxxCustom.lb" name="ypxxCustom.lb" style="width:150px">
+								<option value="">全部</option>
+								<c:forEach items="${lblist}" var="value">
+									<option value="${value.id}">${value.info}</option>
+								</c:forEach>
+							</select>
+						</td>
+						
 						<TD class="left">通用名：</td>
 					    <td><INPUT type="text"  name="ypxxCustom.mc" />
 						    <a id="btn" href="#" onclick="yycgdmxquery()" class="easyui-linkbutton" iconCls='icon-search'>查询</a>

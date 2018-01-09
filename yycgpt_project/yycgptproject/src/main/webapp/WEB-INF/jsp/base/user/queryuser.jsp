@@ -20,9 +20,17 @@
 		width : 120
 	}, {
 		field : 'username',
-		title : '名称',
+		title : '用户姓名',
 		width : 120
 	}, {
+		field : 'sexname',
+		title : '性别',
+		width : 120
+	},{
+		field : 'phone',
+		title : '电话',
+		width : 120
+	},{
 		field : 'groupname',
 		title : '用户类型',
 		width : 120,
@@ -155,7 +163,7 @@
 	//修改
 	function editSysUser(id){
 		//打开页面的添加页面
-		createmodalwindow("修改用户信息", 800, 250,
+		createmodalwindow("修改用户信息", 800, 300,
 				'${baseurl}user/editSysUser.action?id='+id);
 	}
 	
@@ -179,6 +187,16 @@
 					<TD class="left">所属单位：</TD>
 					<td><INPUT type="text" name="sysuserCustom.sysmc" /></TD>
 					
+					</tr>
+					<tr>
+					<TD class="left">用户性别：</TD>
+					<td><select name="sysuserCustom.sex">
+							<option value="">请选择</option>
+							<c:forEach items="${sexList}" var="dictInfo">
+							<option value="${dictInfo.dictcode}">${dictInfo.info}</option>
+							</c:forEach>
+					</select></td>
+					
 					<TD class="left">用户状态：</TD>
 					<!-- <td><INPUT type="text" name="sysuserCustom.userstate" /></TD> -->
 					<td><select name="sysuserCustom.userstate">
@@ -189,7 +207,6 @@
 							<option value="${dictInfo.dictcode}">${dictInfo.info}</option>
 							</c:forEach>
 					</select></td>
-					
 					
 					<TD class="left">用户类型：</TD>
 					<td><select name="sysuserCustom.groupid">

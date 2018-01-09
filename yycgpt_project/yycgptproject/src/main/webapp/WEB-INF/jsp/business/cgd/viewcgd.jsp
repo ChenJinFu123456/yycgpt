@@ -20,7 +20,7 @@ var toolbar=[];
 
 var columns = [ [{
 	field : 'useryymc',
-	title : '医院',
+	title : '医院名称',
 	width : 100 ,
 	formatter:function (value,row,index){
 		//如果从json中取不出useryymc则显示成总计两个字
@@ -40,24 +40,12 @@ var columns = [ [{
 	title : '通用名',
 	width : 100
 },{
-	field : 'jx',
-	title : '剂型',
-	width : 70
-},{
 	field : 'gg',
 	title : '规格',
 	width : 70
 },{
-	field : 'zhxs',
-	title : '转换系数',
-	width : 50
-},{
 	field : 'zbjg',
 	title : '中标价',
-	width : 50
-},{
-	field : 'jyztmc',
-	title : '交易状态',
 	width : 50
 },{
 	field : 'jyjg',
@@ -70,15 +58,15 @@ var columns = [ [{
 },{
 	field : 'cgje',
 	title : '采购金额',
-	width : 50
+	width : 60
 },{
 	field : 'scqymc',
 	title : '生产企业',
-	width : 100
+	width : 200
 },{
-	field : 'spmc',
-	title : '商品名称',
-	width : 100
+	field : 'lbmc',
+	title : '管理类别',
+	width : 55
 },{
 	field : 'cgztmc',
 	title : '采购状态',
@@ -87,20 +75,25 @@ var columns = [ [{
 	field : 'usergysmc',
 	title : '供货商',
 	width : 100
+},{
+	field : 'jyztmc',
+	title : '交易状态',
+	width : 55
 }]];
 
 //加载datagrid（yycgdmxlist）
 
 	 $(function() {
 		$('#yycgdmxlist').datagrid({
-			title : '采购药品列表',
+			title : '采购产品列表',
 			showFooter:true,//是否显示总计行
 			striped : true,
-			url : '${baseurl}cgd/queryYycgdmx_result.action',//这里边后边带了一个参数，所以form中不需要此参数yycgdid
-			 queryParams:{//url的参数，初始加载datagrid时使用的参数
-				id:'${yycgd.id}'//yycgdid是参数名称，如果参数名称中间有点，将参数用单引号括起来
-			}, 
-			idField : 'yycgdmxid',//采购药品明细id
+			url : '${baseurl}cgd/queryYycgdmx_result.action?id=${yycgdid}',//这里边后边带了一个参数，所以form中不需要此参数yycgdid
+			/*  queryParams:{//url的参数，初始加载datagrid时使用的参数
+				 //后台传过来的采购单id
+				id:'${id}'
+			},  */
+			idField : 'yycgdmxid',//采购产品明细id
 			//frozenColumns : frozenColumns,
 			columns : columns,
 			pagination : true,
@@ -112,7 +105,7 @@ var columns = [ [{
 			} );
 	}); 
 
-//采购药品明细查询方法
+//采购产品明细查询方法
 function yycgdmxquery(){
 	var formdata = $("#yycgdmxForm").serializeJson();
 	//alert(formdata);
@@ -124,7 +117,7 @@ function yycgdmxquery(){
 <BODY>
 <!-- 采购单主信息保存form -->
 <form id="yycgdsaveForm" name="yycgdsaveForm" action="${baseurl}cgd/yycgdeditsubmit.action" method="post">
-<input type="hidden" name="id" value="${yycgd.id}"/>
+<%-- <input type="hidden" name="id" value="${yycgd.id}"/> --%>
 <TABLE border=0 cellSpacing=0 cellPadding=0 width="70%" bgColor=#c4d8ed align=center>
 		<TBODY>
 			<TR>
@@ -132,7 +125,7 @@ function yycgdmxquery(){
 					<TABLE cellSpacing=0 cellPadding=0 width="100%">
 						<TBODY>
 							<TR>
-								<TD>&nbsp;药品采购单</TD>
+								<TD>&nbsp;产品采购单</TD>
 								<TD align=right>&nbsp;</TD>
 							</TR>
 						</TBODY>
@@ -188,7 +181,7 @@ function yycgdmxquery(){
 								</TD>
 								<TD height=30 width="15%" align=right>备注：</TD>
 								<TD colspan=3>
-									<textarea rows="2" cols="30" name="yycgdCustom.bz">${yycgd.bz}</textarea>
+									<textarea disabled="disabled" rows="2" cols="30" name="yycgdCustom.bz">${yycgd.bz}</textarea>
 								</TD>
 							</TR>
 							
@@ -202,8 +195,6 @@ function yycgdmxquery(){
 								${yycgd.shyj}
 								</TD>
 							</TR>
-							
-							
 						</TBODY>
 					</TABLE>
 				</TD>
@@ -220,7 +211,7 @@ function yycgdmxquery(){
 					<TABLE cellSpacing=0 cellPadding=0 width="100%">
 						<TBODY>
 							<TR>
-								<TD>&nbsp;采购药品列表</TD>
+								<TD>&nbsp;采购产品列表</TD>
 								<TD align=right>&nbsp;</TD>
 							</TR>
 						</TBODY>
@@ -235,40 +226,33 @@ function yycgdmxquery(){
 	<form id="yycgdmxForm" name="yycgdmxForm" method="post" >
 	<input type="hidden" name="indexs" id="indexs" />
 	<!-- 采购量id -->
-	<input type="hidden" name="id" value="${yycgd.id}"/>
+	<%-- <input type="hidden" name="id" value="${yycgd.id}"/> --%>
 			<TABLE  class="table_search">
 				<TBODY>
 					<TR>
 						
 						<TD class="left">通用名：</td>
 						<td><INPUT type="text"  name="ypxxCustom.mc" /></TD>
-						<TD class="left">剂型：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.jx" /></td>
+						
 						<TD class="left">规格：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.gg" /></td>
-						<TD class="left">转换系数：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.zhxs" /></td>
-					</TR>
-					<TR>
 						<TD class="left">流水号：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.bm" /></td>
+						
 						<TD class="left">生产企业：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.scqymc" /></td>
-						<TD class="left">商品名称：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.spmc" /></td>
+					</TR>
+					<TR>
+						
 						 <td class="left">价格范围：</td>
 				  		<td>
-				      		<INPUT id="ypxxCustom.zbjglower" name="ypxxCustom.zbjglower" style="width:70px"/>
+				      		<INPUT id="ypxxCustom.zbjglower" name="ypxxCustom.price_start" style="width:70px"/>
 							至
-							<INPUT id="ypxxCustom.zbjgupper" name="ypxxCustom.zbjgupper" style="width:70px"/>
-							
+							<INPUT id="ypxxCustom.zbjgupper" name="ypxxCustom.price_end" style="width:70px"/>
 				 		 </td>
-					</tr>
-					<tr>
-					  
-						<TD class="left">药品类别：</TD>
+						<TD class="left">管理类别：</TD>
 						<td >
-							<!-- 药品类别从数据字典中取id作为页面传入action的value -->
+							<!-- 产品类别从数据字典中取id作为页面传入action的value -->
 							<select id="ypxxCustom.lb" name="ypxxCustom.lb" style="width:150px">
 								<option value="">全部</option>
 								<c:forEach items="${lblist}" var="value">
@@ -285,28 +269,21 @@ function yycgdmxquery(){
 									<option value="${value.dictcode}">${value.info}</option>
 								</c:forEach>
 							</select>
-							
 						</td>
 						<TD class="left">采购状态：</TD>
 						<td >
-						   
 							<select id="yycgdmxCustom.cgzt" name="yycgdmxCustom.cgzt" style="width:150px">
 								<option value="">全部</option>
 								<c:forEach items="${cgztlist}" var="value">
 									<option value="${value.dictcode}">${value.info}</option>
 								</c:forEach>
 							</select>
-							
 						</td>
-				 		
-
 				  		<td colspan=2>
 				  		
 						<a id="btn" href="#" onclick="yycgdmxquery()" class="easyui-linkbutton" iconCls='icon-search'>查询</a>
 				  		</td>
-						
-					</TR>
-					
+					</tr>
 				</TBODY>
 			</TABLE>
 	   

@@ -8,11 +8,11 @@ import yycgpt.business.pojo.vo.GysypmlControlQueryVo;
 public interface GysypmlControlService {
 	// 供应商产品目录控制列表
 	public List<GysypmlControlCustom> findGysYpmlControlList(
-			GysypmlControlQueryVo gysypmlControlQueryVo) throws Exception;
+			GysypmlControlQueryVo gysypmlControlQueryVo,String userjdid) throws Exception;
 
 	// 总数
 	public int findGysYpmlControlCount(
-			GysypmlControlQueryVo gysypmlControlQueryVo) throws Exception;
+			GysypmlControlQueryVo gysypmlControlQueryVo,String userjdid) throws Exception;
 	/**
 	 * 
 	* @Title: updateGysYpmlControl  

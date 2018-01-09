@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.codehaus.jackson.map.deser.SettableBeanProperty.ManagedReferenceProperty;
 
 /**
  * 药品信息导入处理接口
@@ -46,7 +45,7 @@ public class YpxxImportServiceImpl implements HxlsOptRowsInterface {
 	public static void main(String[] args) {
 		HxlsRead xls2csv;
 		try {
-			xls2csv = new HxlsRead("d:/ypxx_20140609145243.xls",0,new YpxxImportServiceImpl());
+			xls2csv = new HxlsRead("d:/12.xls",0,new YpxxImportServiceImpl());
 			xls2csv.process();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

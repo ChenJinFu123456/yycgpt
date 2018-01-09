@@ -2,6 +2,7 @@ package yycgpt.business.service;
 
 import java.util.List;
 
+import yycgpt.business.pojo.po.GysypmlControl;
 import yycgpt.business.pojo.po.Yycgdmx;
 import yycgpt.business.pojo.vo.CgdQueryVo;
 import yycgpt.business.pojo.vo.YyCgdMxCustom;
@@ -53,6 +54,9 @@ public interface CgdService {
 	//根据采购单id和产品id删除采购单下的产品
 	public void deleteYyCgdMx(String yycgdid,String ypxxid)throws Exception;
 	
+	//根据供应商id和产品id在供应商产品控制目录中查询产品的供货控制信息
+	public GysypmlControl findYpxxZtByUserGysIdAndYpxxId(String usergysid,String ypxxid)throws Exception;
+	
 	//医院采购单目录查询
 	public List<YycgdCustom> findYyCgdList(String useryyid,String year,CgdQueryVo cgdQueryVo)throws Exception;
 	public int findYyCgdCount(String useryyid,String year,CgdQueryVo cgdQueryVo)throws Exception;
@@ -101,4 +105,6 @@ public interface CgdService {
 	public void saveYyCgdRk(String yycgdid,String ypxxid,YycgdrkCustom yycgdrkCustom)throws Exception;
 	//采购单明细统计
 	public List<YyCgdMxCustom> findYyCgdMxListSum(String yycgdid,CgdQueryVo cgdQueryVo)throws Exception;
+	//医院产品入库统计
+	public List<YyCgdMxCustom> findYyRkListSum(CgdQueryVo cgdQueryVo,String useryyid,String year)throws Exception;
 }

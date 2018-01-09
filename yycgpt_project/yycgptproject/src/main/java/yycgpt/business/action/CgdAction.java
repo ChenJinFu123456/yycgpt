@@ -44,6 +44,8 @@ public class CgdAction {
 		ActiveUser activeUser = (ActiveUser) httpSession
 				.getAttribute(Config.ACTIVEUSER_KEY);
 		String sysMc = activeUser.getSysmc();
+		// String year1 = MyUtil.getDate();
+
 		// 采购单的名称
 		String yycgdmc = sysMc + MyUtil.getDate() + "采购单";
 		model.addAttribute("yycgdmc", yycgdmc);
@@ -111,8 +113,7 @@ public class CgdAction {
 			int page, int rows, CgdQueryVo cgdQueryVo) throws Exception {
 		// 查询数据的总数
 		int total = cgdService.findYyCgdMxCountByYyCgdId(id, cgdQueryVo);
-		
-		
+
 		// 分页参数
 		PageQuery pageQuery = new PageQuery();
 		pageQuery.setPageParams(total, rows, page);
@@ -121,9 +122,10 @@ public class CgdAction {
 		List<YyCgdMxCustom> list = cgdService.findYyCgdMxListByYyCgdId(id,
 				cgdQueryVo);
 		DataGridResultInfo dataGridResultInfo = new DataGridResultInfo();
-		//求总计
-		if(total>0){
-			List<YyCgdMxCustom> sumList =cgdService.findYyCgdMxListSum(id, cgdQueryVo);
+		// 求总计，将总计作为一条数据
+		if (total > 0) {
+			List<YyCgdMxCustom> sumList = cgdService.findYyCgdMxListSum(id,
+					cgdQueryVo);
 			dataGridResultInfo.setFooter(sumList);
 		}
 		dataGridResultInfo.setTotal(total);
@@ -136,8 +138,8 @@ public class CgdAction {
 	public String queryAddYyCgdMx(Model model, String yycgdid) throws Exception {
 
 		// 产品类别
-		List<String> yplblist = systemConfigService.findDictinfoByType("001");
-		model.addAttribute("yplblist", yplblist);
+		List<String> lblist = systemConfigService.findDictinfoByType("001");
+		model.addAttribute("lblist", lblist);
 		// 交易状态
 		List<String> jyztlist = systemConfigService.findDictinfoByType("003");
 		model.addAttribute("jyztlist", jyztlist);
@@ -355,9 +357,14 @@ public class CgdAction {
 		// 采购单状态
 		List<String> cgdztlist = systemConfigService.findDictinfoByType("010");
 		model.addAttribute("cgdztlist", cgdztlist);
+
+		// 产品类别
+		List<String> lblist = systemConfigService.findDictinfoByType("001");
+		model.addAttribute("lblist", lblist);
 		// 当前年份
 		// model.addAttribute("year",MyUtil.get_YYYY(MyUtil.getDate()));
-		model.addAttribute("year", "2017");
+		String year = MyUtil.get_YYYY(MyUtil.getDate());
+		model.addAttribute("year", year);
 		return "/business/cgd/yycgdlist";
 	}
 
@@ -416,7 +423,8 @@ public class CgdAction {
 		model.addAttribute("cgdztlist", cgdztlist);
 		// 当前年份
 		// model.addAttribute("year",MyUtil.get_YYYY(MyUtil.getDate()));
-		model.addAttribute("year", "2017");
+		String year = MyUtil.get_YYYY(MyUtil.getDate());
+		model.addAttribute("year", year);
 		return "/business/cgd/checkyycgdlist";
 	}
 
@@ -502,15 +510,13 @@ public class CgdAction {
 	@RequestMapping("/disposeyycgd")
 	public String disposeYyCgdList(Model model) throws Exception {
 
-		// 采购单状态
-		/*
-		 * List<String> cgdztlist =
-		 * systemConfigService.findDictinfoByType("010");
-		 * model.addAttribute("cgdztlist", cgdztlist);
-		 */
+		// 产品类别
+		List<String> lblist = systemConfigService.findDictinfoByType("001");
+		model.addAttribute("lblist", lblist);
 		// 当前年份
 		// model.addAttribute("year",MyUtil.get_YYYY(MyUtil.getDate()));
-		model.addAttribute("year", "2017");
+		String year = MyUtil.get_YYYY(MyUtil.getDate());
+		model.addAttribute("year", year);
 		return "/business/cgd/disposeyycgd";
 	}
 
@@ -607,7 +613,8 @@ public class CgdAction {
 		model.addAttribute("cgdztlist", cgdztlist);
 		// 当前年份
 		// model.addAttribute("year",MyUtil.get_YYYY(MyUtil.getDate()));
-		model.addAttribute("year", "2017");
+		String year = MyUtil.get_YYYY(MyUtil.getDate());
+		model.addAttribute("year", year);
 		return "/business/cgd/receiveyycgd";
 	}
 
@@ -631,8 +638,14 @@ public class CgdAction {
 		// 设置分页参数
 		pageQuery.setPageParams(total, rows, page);
 		cgdQueryVo.setPageQuery(pageQuery);
+		
 
 		DataGridResultInfo dataGridResultInfo = new DataGridResultInfo();
+		//入库信息的统计：入库总量，入库总金额
+		if (total > 0) {
+			List<YyCgdMxCustom> sumList = cgdService.findYyRkListSum(cgdQueryVo, useryyid, year);
+			dataGridResultInfo.setFooter(sumList);
+		}
 		dataGridResultInfo.setTotal(total);
 		dataGridResultInfo.setRows(list);
 		return dataGridResultInfo;
@@ -641,8 +654,7 @@ public class CgdAction {
 	// 批量入库医院采购单下产品
 	@RequestMapping("/receivesubmit")
 	public @ResponseBody
-	SubmitResultInfo receiveYyCgdRkSubmit(CgdQueryVo cgdQueryVo,
-			int[] indexs// 页面选中的序号
+	SubmitResultInfo receiveYyCgdRkSubmit(CgdQueryVo cgdQueryVo, int[] indexs// 页面选中的序号
 	) throws Exception {
 
 		// 需要处理数据的总数
@@ -661,9 +673,9 @@ public class CgdAction {
 
 			// 获取选中单行纪录
 			YycgdrkCustom yycgdrkCustom = list.get(indexs[i]);
-			//采购单的id
+			// 采购单的id
 			String yycgdid = yycgdrkCustom.getYycgdid();
-			//产品id
+			// 产品id
 			String ypxxid = yycgdrkCustom.getYpxxid();
 			try {
 				cgdService.saveYyCgdRk(yycgdid, ypxxid, yycgdrkCustom);
@@ -693,4 +705,24 @@ public class CgdAction {
 						count_success, count_failure }), msgsList);
 
 	}
+
+	// 采购单查看跳转页面
+	@RequestMapping("/viewcgd")
+	public String viewCgd(String id, Model model) throws Exception {
+		// 采购状态
+		List<Dictinfo> cgztlist = systemConfigService.findDictinfoByType("011");
+		model.addAttribute("cgztlist", cgztlist);
+		// 交易状态
+		List<String> jyztlist = systemConfigService.findDictinfoByType("003");
+		model.addAttribute("jyztlist", jyztlist);
+		// 产品类别
+		List<String> lblist = systemConfigService.findDictinfoByType("001");
+		model.addAttribute("lblist", lblist);
+		// 获取采购单的信息
+		YycgdCustom yycgdCustom = cgdService.findYyCgdById(id);
+		model.addAttribute("yycgd", yycgdCustom);
+		model.addAttribute("yycgdid", id);
+		return "/business/cgd/viewcgd";
+	}
+
 }

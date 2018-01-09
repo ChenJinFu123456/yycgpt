@@ -13,12 +13,15 @@ import yycgpt.base.pojo.po.Useryy;
 import yycgpt.base.process.context.Config;
 import yycgpt.base.process.result.ResultUtil;
 import yycgpt.base.service.SystemConfigService;
+import yycgpt.business.dao.mapper.GysypmlControlMapper;
 import yycgpt.business.dao.mapper.YpxxMapper;
 import yycgpt.business.dao.mapper.YybusinessMapper;
 import yycgpt.business.dao.mapper.YycgdMapper;
 import yycgpt.business.dao.mapper.YycgdMapperCustom;
 import yycgpt.business.dao.mapper.YycgdmxMapper;
 import yycgpt.business.dao.mapper.YycgdrkMapper;
+import yycgpt.business.pojo.po.GysypmlControl;
+import yycgpt.business.pojo.po.GysypmlControlExample;
 import yycgpt.business.pojo.po.Ypxx;
 import yycgpt.business.pojo.po.Yybusiness;
 import yycgpt.business.pojo.po.Yycgd;
@@ -31,6 +34,7 @@ import yycgpt.business.pojo.vo.YyCgdMxCustom;
 import yycgpt.business.pojo.vo.YycgdCustom;
 import yycgpt.business.pojo.vo.YycgdrkCustom;
 import yycgpt.business.service.CgdService;
+import yycgpt.utils.CheckRegex;
 import yycgpt.utils.MyUtil;
 import yycgpt.utils.UUIDBuild;
 
@@ -53,6 +57,8 @@ public class CgdServiceImpl implements CgdService {
 	private YycgdrkMapper yycgdrkMapper;
 	@Autowired
 	private YybusinessMapper yybusinessMapper;
+	@Autowired
+	private GysypmlControlMapper gysypmlControlMapper;
 
 	@Override
 	public String insertYycgd(YycgdCustom yycgdCustom, String userYyId,
@@ -122,10 +128,11 @@ public class CgdServiceImpl implements CgdService {
 		// 从数据库中查询采购单的信息
 		YycgdCustom yycgdCustom_old = this.findYyCgdById(id);
 		// 向对象中设置修改的值
-		yycgdCustom_old.setLxr(yycgdCustom.getLxr());
-		yycgdCustom_old.setLxdh(yycgdCustom.getLxdh());
-		yycgdCustom_old.setMc(yycgdCustom.getMc());
-		yycgdCustom_old.setBz(yycgdCustom.getBz());
+		yycgdCustom_old.setLxr(yycgdCustom.getLxr());//联系人
+		yycgdCustom_old.setLxdh(yycgdCustom.getLxdh());//联系电话
+		yycgdCustom_old.setMc(yycgdCustom.getMc());//采购单名称
+		yycgdCustom_old.setBz(yycgdCustom.getBz());//备注
+		yycgdCustom_old.setXgtime(MyUtil.getNowDate());
 		// 设置年份
 		yycgdCustom_old.setBusinessyear(year);
 		yycgdMapper.updateByPrimaryKey(yycgdCustom_old);
@@ -246,6 +253,19 @@ public class CgdServiceImpl implements CgdService {
 	}
 
 	@Override
+	public GysypmlControl findYpxxZtByUserGysIdAndYpxxId(String usergysid,
+			String ypxxid) throws Exception {
+		GysypmlControlExample gysypmlControlExample = new GysypmlControlExample();
+		GysypmlControlExample.Criteria criteria = gysypmlControlExample
+				.createCriteria();
+		criteria.andUsergysidEqualTo(usergysid);
+		criteria.andYpxxidEqualTo(ypxxid);
+		List<GysypmlControl> gysypmlControls = gysypmlControlMapper
+				.selectByExample(gysypmlControlExample);
+		return gysypmlControls.get(0);
+	}
+
+	@Override
 	public void insertYycgdmx(String yycgdid, String ypxxid, String usergysid)
 			throws Exception {
 		// 设置年份
@@ -261,6 +281,16 @@ public class CgdServiceImpl implements CgdService {
 		if (yycgdmx_1 != null) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 508,
 					null));
+		}
+
+		// 交易状态为0（不用判断）和供货状态为2的不能添加
+		// 根据供应商id和产品id在供应商产品控制目录中查询产品的供货控制信息
+		GysypmlControl gysypmlControl = this.findYpxxZtByUserGysIdAndYpxxId(
+				usergysid, ypxxid);
+		String ghzt = gysypmlControl.getControl();
+		if (ghzt != null && ghzt.equals("2")) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 725,
+					new Object[] { ypxx.getBm(), ypxx.getMc() }));
 		}
 
 		// 对应采购产品明细表的字段进行添加纪录
@@ -294,8 +324,10 @@ public class CgdServiceImpl implements CgdService {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 509,
 					null));
 		}
+		
+		
 		// 校验采购量
-		if (cgl == null||cgl <= 0) {
+		if (cgl == null || !CheckRegex.isNumeric_zs(cgl.toString())) {
 			// 请输入大于0的数值、且为整数
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 711,
 					new Object[] { this.findYpxxBmByYpxxId(ypxxid) }));
@@ -786,7 +818,11 @@ public class CgdServiceImpl implements CgdService {
 		yycgdrkMapper.insert(yycgdrk);
 	}
 
-	@Override
+	
+	/**统计某一个医院的某一个采购单的采购总金额和采购总量
+	 * 只需要知道采购单号就行了，因为采购单号是唯一的，而一个采购单下有很多的产品
+	 * 
+	 */
 	public List<YyCgdMxCustom> findYyCgdMxListSum(String yycgdid,
 			CgdQueryVo cgdQueryVo) throws Exception {
 		cgdQueryVo = cgdQueryVo != null ? cgdQueryVo : new CgdQueryVo();
@@ -801,5 +837,34 @@ public class CgdServiceImpl implements CgdService {
 		String year = yycgdid.substring(0, 4);
 		cgdQueryVo.setBusinessyear(year);
 		return yycgdMapperCustom.findYyCgdMxListSum(cgdQueryVo);
+	}
+	
+	
+	/**
+	 * 统计某一个医院的入库产品的总数和入库总金额，需要知道医院的id，还有所有未确认发货的产品，
+	 * 因为一个医院可能一次性入库的产品在几个采购单中，但是所有需要确认入库的产品的供货状态都是“已发货”
+	 */
+	
+	public List<YyCgdMxCustom> findYyRkListSum(CgdQueryVo cgdQueryVo,String useryyid,String year)throws Exception{
+		cgdQueryVo = cgdQueryVo != null ? cgdQueryVo : new CgdQueryVo();
+		//设置医院的id
+		Useryy useryy = cgdQueryVo.getUseryy();
+		if(useryy==null){
+			useryy = new Useryy();
+		}
+		useryy.setId(useryyid);
+		cgdQueryVo.setUseryy(useryy);
+		
+		//设置采购状态呢为2
+		YyCgdMxCustom yyCgdMxCustom = cgdQueryVo.getYyCgdMxCustom();
+		if(yyCgdMxCustom==null){
+			yyCgdMxCustom = new YyCgdMxCustom();
+		}
+		
+		yyCgdMxCustom.setCgzt("2");
+		cgdQueryVo.setYyCgdMxCustom(yyCgdMxCustom);
+		//设置年份（为当前年份）
+		cgdQueryVo.setBusinessyear(year);
+		return yycgdMapperCustom.findYyRkListSum(cgdQueryVo);
 	}
 }

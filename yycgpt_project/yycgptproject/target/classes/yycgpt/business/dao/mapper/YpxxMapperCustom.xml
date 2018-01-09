@@ -14,16 +14,21 @@
 				and ypxx.bm = #{ypxxCustom.bm}
 			</if>
 			
-			<if test="ypxxCustom.bm!=null and ypxxCustom.bm!=''">
+			<!-- <if test="ypxxCustom.bm!=null and ypxxCustom.bm!=''">
 				and ypxx.bm = #{ypxxCustom.bm}
-			</if>
-
+			</if> -->
+			
+			<!-- 产品名称 -->
 			<if test="ypxxCustom.mc!=null and ypxxCustom.mc!=''">
-				and ypxx.mc = #{ypxxCustom.mc}
+				and ypxx.mc like '%${ypxxCustom.mc}%'
 			</if>
 
 			<if test="ypxxCustom.jx!=null and ypxxCustom.jx!=''">
 				and ypxx.jx = #{ypxxCustom.jx}
+			</if>
+			<!-- 产品管理类别 -->
+			<if test="ypxxCustom.lb!=null and ypxxCustom.lb!=''">
+				and ypxx.lb = #{ypxxCustom.lb}
 			</if>
 
 			<if test="ypxxCustom.gg!=null and ypxxCustom.gg!=''">
@@ -35,11 +40,11 @@
 			</if>
 
 			<if test="ypxxCustom.scqymc!=null and ypxxCustom.scqymc!=''">
-				and ypxx.scqymc = #{ypxxCustom.scqymc}
+				and ypxx.scqymc like '%${ypxxCustom.scqymc}%'
 			</if>
-
+			
 			<if test="ypxxCustom.spmc!=null and ypxxCustom.spmc!=''">
-				and ypxx.spmc = #{ypxxCustom.spmc}
+				and ypxx.spmc like '%${ypxxCustom.spmc}%'
 			</if>
 
 			<if test="ypxxCustom.jyzt!=null and ypxxCustom.jyzt!=''">
@@ -88,8 +93,12 @@
 		scqymc,
 		spmc,
 		zbjg,
+		lb,
+       (select info
+          from dictinfo
+         where ypxx.lb = dictinfo.id
+           and dictinfo.typecode = '001') as lbmc,
 		jyzt,
-
 		(select
 		info
 		from

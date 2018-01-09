@@ -2,6 +2,7 @@ package yycgpt.business.pojo.vo;
 
 import java.util.List;
 
+import yycgpt.base.pojo.po.Userjd;
 import yycgpt.base.pojo.vo.PageQuery;
 
 public class GysypmlControlQueryVo {
@@ -14,6 +15,10 @@ public class GysypmlControlQueryVo {
 	private List<YpxxCustom> ypxxCustoms;
 	//接受批量提交的供应商信息
 	private List<GysypmlControlCustom> gysypmls;
+	
+	//监督单位
+	private Userjd userjd;
+	
 	public GysypmlControlCustom getGysypmlControlCustom() {
 		return gysypmlControlCustom;
 	}
@@ -52,4 +57,14 @@ public class GysypmlControlQueryVo {
 	public List<GysypmlControlCustom> getGysypmls() {
 		return gysypmls;
 	}
+
+	public Userjd getUserjd() {
+		return userjd;
+	}
+
+	public void setUserjd(Userjd userjd) {
+		this.userjd = userjd;
+	}
+	
+	
 }

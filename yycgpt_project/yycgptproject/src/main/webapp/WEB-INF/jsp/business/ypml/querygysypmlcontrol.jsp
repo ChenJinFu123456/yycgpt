@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/jsp/base/tag.jsp"%>
 <html> 
 <head>
-<title>供货商药品目录控制查询</title>
+<title>供货商产品目录控制查询</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -43,7 +43,7 @@ function gysypmlcontrolsubmit_callback(data) {
 
 function ypxxinfo(id){
 	var sendUrl = "${baseurl}ypml/ypxxview.action?id="+id;
-	createmodalwindow("药品信息查看", 900, 500, sendUrl);
+	createmodalwindow("产品信息查看", 900, 500, sendUrl);
 }
 
 //工具栏
@@ -83,7 +83,7 @@ var columns = [ [{
 	field : 'control',
 	title : '修改供货状态',
 	width : 80,
-	//select下拉框(供货商药品控制状态列表)
+	//select下拉框(供货商产品控制状态列表)
 	formatter : function (value,row,index){
 		return '<select  name="gysypmls['+index+'].control" style="width:80px">'
 				+'<option value="" checked>请选择</option>'
@@ -96,7 +96,7 @@ var columns = [ [{
 	field : 'advice',
 	title : '审核意见',
 	width : 80,
-	//select下拉框(供货商药品控制状态列表)
+	//select下拉框(供货商产品控制状态列表)
 	formatter : function (value,row,index){
 		 var val;
 		if(value){
@@ -115,47 +115,47 @@ var columns = [ [{
 	field : 'mc',
 	title : '通用名',
 	width : 100
-},{
+}/* ,{
 	field : 'jx',
 	title : '剂型',
 	width : 80
-},{
+} */,{
 	field : 'gg',
 	title : '规格',
 	width : 100
-},{
+},/* {
 	field : 'zhxs',
 	title : '转换系数',
 	width : 50
-},{
+}, */{
 	field : 'scqymc',
 	title : '生产企业',
-	width : 150
-}, {
+	width : 200
+}, /* {
 	field : 'spmc',
 	title : '商品名称',
 	width : 100
-},{
+}, */{
 	field : 'zbjg',
-	title : '中标价',
-	width : 50
+	title : '中标价格',
+	width : 55
 },{
 	field : 'jyztmc',
 	title : '交易状态',
 	width : 60
 }
-,{
+/* ,{
 	field : 'opt3',
 	title : '详细',
 	width : 60,
 	formatter:function(value, row, index){
 		return '<a href=javascript:ypxxinfo(\''+row.ypxxid+'\')>查看</a>';
 	}
-}]];
+} */]];
 
 function initGrid(){
 	$('#gysypmllist').datagrid({
-		title : '供应药品列表',
+		title : '供应产品列表',
 		//nowrap : false,
 		striped : true,
 		//collapsible : true,
@@ -205,20 +205,20 @@ function initGrid(){
 						
 						<TD class="left">通用名：</td>
 						<td><INPUT type="text"  name="ypxxCustom.mc" /></TD>
-						<TD class="left">剂型：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.jx" /></td>
+						<!-- <TD class="left">剂型：</TD>
+						<td ><INPUT type="text" name="ypxxCustom.jx" /></td> -->
 						<TD class="left">规格：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.gg" /></td>
-						<TD class="left">转换系数：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.zhxs" /></td>
-					</TR>
-					<TR>
+						<!-- <TD class="left">转换系数：</TD>
+						<td ><INPUT type="text" name="ypxxCustom.zhxs" /></td> -->
 						<TD class="left">流水号：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.bm" /></td>
 						<TD class="left">生产企业：</TD>
 						<td ><INPUT type="text" name="ypxxCustom.scqymc" /></td>
-						<TD class="left">商品名称：</TD>
-						<td ><INPUT type="text" name="ypxxCustom.spmc" /></td>
+					</TR>
+					<TR>
+						<!-- <TD class="left">商品名称：</TD>
+						<td ><INPUT type="text" name="ypxxCustom.spmc" /></td> -->
 						 <td class="left">价格范围：</td>
 				  		<td>
 				      		<INPUT id="ypxxCustom.zbjglower" name="ypxxCustom.price_start" style="width:70px"/>
@@ -226,10 +226,13 @@ function initGrid(){
 							<INPUT id="ypxxCustom.zbjgupper" name="ypxxCustom.price_end" style="width:70px"/>
 							
 				 		 </td>
-					</tr>
-					<tr>
-					  
-						<TD class="left">药品类别：</TD>
+				 		 
+				 		  <td class="left" height="25">供货商：</td>
+				  		<td>
+				  		<input type="text" name="gysypmlControlCustom.usergysmc" id="usergysCustom.mc" />
+						
+				  		</td>
+						<TD class="left">产品类别：</TD>
 						<td >
 							<select id="ypxxCustom.lb" name="ypxxCustom.lb" style="width:150px">
 								<option value="">全部</option>
@@ -248,12 +251,10 @@ function initGrid(){
 							</select>
 							
 						</td> 
+					</tr>
+					<tr>
 
-						 <td class="left" height="25">供货商：</td>
-				  		<td>
-				  		<input type="text" name="gysypmlControlCustom.usergysmc" id="usergysCustom.mc" />
 						
-				  		</td>
 						<td class="left" height="25">供货状态：</td>
 				  		<td>
 				  		<select id="gysypmlControlCustom.control" name="gysypmlControlCustom.control" style="width:80px">

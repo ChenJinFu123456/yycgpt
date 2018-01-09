@@ -23,6 +23,10 @@
 				and sysuser.groupid = #{sysuserCustom.groupid}
 			</if>
 
+			<if test="sysuserCustom.sex!=null and sysuserCustom.sex!=''">
+				and sysuser.sex = #{sysuserCustom.sex}
+			</if>
+
 			<if test="sysuserCustom.userstate!=null and sysuserCustom.userstate!=''">
 				and sysuser.userstate = #{sysuserCustom.userstate}
 			</if>
@@ -33,7 +37,7 @@
 	<!-- 医院的查询条件 -->
 	<sql id="query_useryy_where">
 		<if test="useryy!=null">
-			<if test="useryy.mc!=null and useryy.mc!=''"> and useryy.mc like 
+			<if test="useryy.mc!=null and useryy.mc!=''"> and useryy.mc like
 				'%${useryy.mc}%' </if>
 
 			<if test="useryy.id!=null and useryy.id!=''">
@@ -60,6 +64,7 @@
 				and usergys.id = #{usergys.id}
 			</if>
 
+
 		</if>
 
 	</sql>
@@ -79,14 +84,23 @@
 		SYSUSER.userid,
 		SYSUSER.username,
 		SYSUSER.groupid,
-
-		(select info from dictinfo where dictcode=
+		sysuser.sex,
+		sysuser.phone,
+		(select info
+		from dictinfo
+		where dictcode = SYSUSER.sex
+		and typecode = 'yhxb') as sexname,
+		(select
+		info from dictinfo where
+		dictcode=
 		SYSUSER.groupid and
-		typecode='s01') as groupname,
+		typecode='s01') as
+		groupname,
 
 		SYSUSER.userstate,
 
-		(select info from dictinfo where dictcode= SYSUSER.userstate and
+		(select info from dictinfo where dictcode=
+		SYSUSER.userstate and
 		typecode =
 		'yhzt') as statename,
 
@@ -138,13 +152,22 @@
 		SYSUSER.groupid,
 		SYSUSER.userstate,
 		SYSUSER.sysid,
+		sysuser.sex,
+		sysuser.phone,
+		(select info
+		from dictinfo
+		where dictcode =
+		SYSUSER.sex
+		and typecode = 'yhxb') as sexname,
+
 		decode(SYSUSER.Groupid,
 		'1',
 		(select mc
 		from userjd where id =
 		sysuser.sysid),
 		'2',
-		(select mc from userjd where
+		(select mc from
+		userjd where
 		id = sysuser.sysid),
 		'3',
 		(select mc from useryy where id =

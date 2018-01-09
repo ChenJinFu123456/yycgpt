@@ -149,7 +149,7 @@ public class YpmlServiceImpl implements YpmlService {
 					null));
 		}
 		String jyzt = ypxx.getJyzt();
-		if (jyzt.equals("2")) {
+		if (jyzt.equals("0")) {
 			// 产品的交易状态为暂停
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 403,
 					new Object[] { ypxx.getBm(), ypxx.getMc() }));

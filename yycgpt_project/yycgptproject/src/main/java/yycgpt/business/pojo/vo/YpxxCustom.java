@@ -9,6 +9,9 @@ public class YpxxCustom extends Ypxx{
 	//交易状态的名称
 	private String jyztmc;
 
+	//类别名称
+	private String lbmc;
+	
 	public String getJyztmc() {
 		return jyztmc;
 	}
@@ -31,6 +34,14 @@ public class YpxxCustom extends Ypxx{
 
 	public void setPrice_end(Float price_end) {
 		this.price_end = price_end;
+	}
+
+	public String getLbmc() {
+		return lbmc;
+	}
+
+	public void setLbmc(String lbmc) {
+		this.lbmc = lbmc;
 	}
 	
 }

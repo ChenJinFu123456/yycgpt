@@ -8,6 +8,9 @@ public class SysuserCustom extends Sysuser{
 	//确认密码
 	private String repwd;
 	
+	//用户性别
+	private String sexname;
+	
 	//用户类型所对应的名称
 	private String groupname;
 	//用户状态名称
@@ -42,5 +45,13 @@ public class SysuserCustom extends Sysuser{
 	}
 	public void setStatename(String statename) {
 		this.statename = statename;
+	}
+
+	public String getSexname() {
+		return sexname;
+	}
+
+	public void setSexname(String sexname) {
+		this.sexname = sexname;
 	}
 }

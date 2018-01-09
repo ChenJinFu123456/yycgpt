@@ -22,17 +22,15 @@
 				test="gysypmlControlCustom.control!=null and gysypmlControlCustom.control!=''">
 				and gysypml_control.control = #{gysypmlControlCustom.control}
 			</if>
-			<!-- 
-			本来应该重新设置sql查询代码块，也就是usergyscustom,但是项目中没有生成关于usergys的mapper和pojo,
-			所以jsp中暂时用gysypmlControlCustom.usergysmc来接受参数值
-			 -->
+			<!-- 本来应该重新设置sql查询代码块，也就是usergyscustom,但是项目中没有生成关于usergys的mapper和pojo, 
+				所以jsp中暂时用gysypmlControlCustom.usergysmc来接受参数值 -->
 			<if
 				test="gysypmlControlCustom.usergysmc!=null and gysypmlControlCustom.usergysmc!=''">
 				and usergys.mc = #{gysypmlControlCustom.usergysmc}
 			</if>
 		</if>
 	</sql>
-	
+
 	<!-- 供应商产品控制目录查询 -->
 	<select id="findGysYpmlControlList" parameterType="yycgpt.business.pojo.vo.GysypmlControlQueryVo"
 		resultType="yycgpt.business.pojo.vo.GysypmlControlCustom">
@@ -50,7 +48,8 @@
 		gysypml_control.ypxxid,
 		gysypml_control.usergysid,
 		gysypml_control.advice,
-		usergys.mc as usergysmc,
+		usergys.mc as
+		usergysmc,
 		gysypml_control.control,
 		(select info
 		from dictinfo
@@ -80,6 +79,12 @@
 		and
 		gysypml_control.ypxxid = ypxx.id
 
+		<!-- 监督单位只能审核自己管辖区域内的供应商的产品 -->
+		<!-- 将供应商的注册地址当做地区使用 -->
+		and usergys.id in (
+		select usergys.id from usergys where usergys.zcdz like '${userjd.dq}%'
+		)
+
 		<!-- 查询条件 -->
 		<include
 			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where" />
@@ -91,10 +96,10 @@
 		<if test="pageQuery!=null">
 			) page_1
 		
-<![CDATA[
+		<![CDATA[
 		where rownum <= ${pageQuery.PageQuery_end}) page_2
 		where page_2.page_num >= ${pageQuery.PageQuery_start}
-]]>
+		]]>
 		</if>
 		<!-- 分页尾 -->
 
@@ -112,8 +117,13 @@
 		where
 		gysypml_control.usergysid = usergys.id
 		and
-		gysypml_control.ypxxid = ypxx.id
-		
+		gysypml_control.ypxxid =
+		ypxx.id
+
+
+		and usergys.id in (
+		select usergys.id from usergys where usergys.zcdz like '${userjd.dq}%'
+		)
 		<!-- 查询条件 -->
 		<include
 			refid="yycgpt.business.dao.mapper.YpxxMapperCustom.query_yyxx_where" />

@@ -4,11 +4,11 @@
                  }
                  ]
                },
-               {"icon" : "icon-sys","menuid" : "1","menuname" : "药品目录","url" : "","menus" : [
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "药品目录导出","url" : "/yycgptproject/ypml/exportYpxx.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "药品目录导 入","url" : "/yycgptproject/ypml/importypxx.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "供货商药品目录维护","url" : "/yycgptproject/ypml/querygysypml.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "监管单位药品目录审核","url" : "/yycgptproject/ypml/querygysypmlcontrol.action"
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "产品目录","url" : "","menus" : [
+                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "产品目录导出","url" : "/yycgptproject/ypml/exportYpxx.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "产品目录导入","url" : "/yycgptproject/ypml/importypxx.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "供货商产品目录维护","url" : "/yycgptproject/ypml/querygysypml.action"
+                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "监管单位产品目录审核","url" : "/yycgptproject/ypml/querygysypmlcontrol.action"
                  }
                  ] 
                },
