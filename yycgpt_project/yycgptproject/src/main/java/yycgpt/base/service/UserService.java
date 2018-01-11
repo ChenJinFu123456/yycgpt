@@ -19,6 +19,18 @@ public interface UserService {
 	public  int findSysuserCount(SysuserQueryVo sysuserQueryVo)throws Exception;
 	//添加用户
 	public void insertSysuser(SysuserCustom sysuserCustom)throws Exception;
+	//注册用户
+	public SysuserCustom registerSysuser(SysuserCustom sysuserCustom)throws Exception;
+	//注册成功页面跳转
+	public void registerSuccess(String activecode)throws Exception;
+	//根据激活码获取用户信息
+	/**
+	 * vchart1作为激活码字段
+	 * @param activecode:激活码是唯一的
+	 * @return
+	 * @throws Exception
+	 */
+	public Sysuser findUserByVachrt1(String activecode)throws Exception;
 	//根据用户帐号查询用户
 	public Sysuser findSysuserByUserId(String userid)throws Exception;
 	//卫生室、医院
