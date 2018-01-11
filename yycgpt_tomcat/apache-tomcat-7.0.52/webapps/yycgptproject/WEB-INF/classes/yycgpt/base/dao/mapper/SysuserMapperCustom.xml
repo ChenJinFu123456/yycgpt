@@ -106,6 +106,8 @@
 
 		SYSUSER.sysid,
 		decode(SYSUSER.Groupid,
+		'0',
+        (select mc from userjd where id = sysuser.sysid),
 		'1',
 		(select mc
 		from userjd where id =

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import yycgpt.base.pojo.vo.ActiveUser;
+import yycgpt.base.pojo.vo.SysuserCustom;
 import yycgpt.base.process.context.Config;
 import yycgpt.base.process.result.ResultUtil;
 import yycgpt.base.service.UserService;
@@ -68,5 +69,27 @@ public class LoginAction {
 		session.invalidate();
 		return "redirect:login.action";
 	}
-
+	
+	//修改密码跳转
+	@RequestMapping("repwd")
+	public String rewpwd(HttpSession session,Model model)throws Exception{
+		//获取账号
+		ActiveUser activeUser = (ActiveUser) session.getAttribute(Config.ACTIVEUSER_KEY);
+		String userId = activeUser.getUserid();
+		model.addAttribute("userId", userId);
+		return "/base/repwd";
+	}
+	
+	/**
+	 * 用户的userid(唯一的)、原始密码、新密码
+	 * 
+	 * 
+	 */
+	@RequestMapping("/repwdSumit")
+	public @ResponseBody SubmitResultInfo repwdSumit(HttpSession session,SysuserCustom sysuserCustom,String userId)throws Exception{
+		userService.updateSysuserPwdByUserId(userId, sysuserCustom);
+		
+		return ResultUtil.createSubmitResult(ResultUtil.createSuccess(
+				Config.MESSAGE, 906, null));
+	}
 }

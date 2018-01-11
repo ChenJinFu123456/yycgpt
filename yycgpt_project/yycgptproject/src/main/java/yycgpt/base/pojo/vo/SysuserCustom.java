@@ -7,7 +7,26 @@ public class SysuserCustom extends Sysuser{
 	private String  sysmc;
 	//确认密码
 	private String repwd;
-	
+	//新密码
+	private String newpwd;
+	//旧密码
+	private String oldpwd;
+	public String getOldpwd() {
+		return oldpwd;
+	}
+
+	public void setOldpwd(String oldpwd) {
+		this.oldpwd = oldpwd;
+	}
+
+	public String getNewpwd() {
+		return newpwd;
+	}
+
+	public void setNewpwd(String newpwd) {
+		this.newpwd = newpwd;
+	}
+
 	//用户性别
 	private String sexname;
 	

@@ -1,28 +1,18 @@
 {
-   "menus" : [{"icon" : "icon-sys","menuid" : "1","menuname" : "系统管理","url" : "","menus" : [
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "用户管理","url" : "/yycgptproject/user/queryuser.action"
-                 }
-                 ]
-               },
-               {"icon" : "icon-sys","menuid" : "1","menuname" : "产品目录","url" : "","menus" : [
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "产品目录导出","url" : "/yycgptproject/ypml/exportYpxx.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "产品目录导入","url" : "/yycgptproject/ypml/importypxx.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "供货商产品目录维护","url" : "/yycgptproject/ypml/querygysypml.action"
-                 },{"icon" : "icon-log","menuid" : "1_1","menuname" : "监管单位产品目录审核","url" : "/yycgptproject/ypml/querygysypmlcontrol.action"
+   "menus" : [
+               {"icon" : "icon-sys","menuid" : "1","menuname" : "产品管理","url" : "","menus" : [
+                {"icon" : "icon-log","menuid" : "1_1","menuname" : "供货商产品目录维护","url" : "/yycgptproject/ypml/querygysypml.action"
                  }
                  ] 
                },
                {"icon" : "icon-sys","menuid" : "1","menuname" : "采购单管理","url" : "","menus" : [
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "创建采购单","url" : "/yycgptproject/cgd/addcgd.action"
-                 },
+                
                  {"icon" : "icon-log","menuid" : "1_1","menuname" : "采购单维护","url" : "/yycgptproject/cgd/yycgdlist.action"
                  },
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "采购单审核","url" : "/yycgptproject/cgd/checkyycgdlist.action"
-                 },
+             
                  {"icon" : "icon-log","menuid" : "1_1","menuname" : "采购单受理","url" : "/yycgptproject/cgd/disposeyycgd.action"
-                 },
-                 {"icon" : "icon-log","menuid" : "1_1","menuname" : "入库","url" : "/yycgptproject/cgd/receivecgd.action"
-                 }] 
+                 }
+                 ] 
                },
                {"icon" : "icon-sys","menuid" : "1","menuname" : "统计分析","url" : "","menus" : [
                  {"icon" : "icon-log","menuid" : "1_1","menuname" : "交易明细查询","url" : "/yycgptproject/jymx/businesslist.action"

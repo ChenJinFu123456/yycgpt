@@ -9,7 +9,7 @@
 	href="${baseurl}js/easyui/styles/default.css">
 <%@ include file="/WEB-INF/jsp/base/common_css.jsp"%>
 <%@ include file="/WEB-INF/jsp/base/common_js.jsp"%>
-<title>修改用户</title>
+<title>修改用户信息</title>
 <script type="text/javascript">
 	function sysusersave() {
 

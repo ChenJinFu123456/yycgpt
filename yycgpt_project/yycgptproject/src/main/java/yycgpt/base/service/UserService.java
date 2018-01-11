@@ -50,4 +50,6 @@ public interface UserService {
 	* @date  2017年11月27日下午4:23:55
 	 */
 	public SysuserCustom findSysuserById(String id)throws Exception;
+	//根据用户userid修改用户密码
+	public void updateSysuserPwdByUserId(String userId,SysuserCustom sysuserCustom)throws Exception;
 }

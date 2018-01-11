@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/jsp/base/tag.jsp"%>
 <html>
 <head>
-<title>药品采购平台</title>
+<title>医疗器械进销存系统</title>
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 
@@ -31,18 +31,24 @@
 	$(function() {//预加载方法
 		//通过ajax请求菜单
 		//alert("${baseurl}");
-		$.ajax({
+		/*  $.ajax({
 			url : '${baseurl}menu.json',
 			type : 'POST',
 			dataType : 'json',
 			success : function(data) {
-				_menus = data;
-				initMenu(_menus);//解析json数据，将菜单生成
-			},
-			error : function(msg) {
+				//_menus = data;
+				//alert(data);
+				alert(JSON.stringify(data));
+				//initMenu(_menus);//解析json数据，将菜单生成
+			}, 
+			 error : function(msg) {
 				alert('菜单加载异常!');
-			}
-		});
+			}  
+			
+		});  */
+			_menus = $.parseJSON('${menus}');
+			initMenu(_menus);
+	
 
 		//tabClose();
 		//tabCloseEven();
@@ -70,7 +76,12 @@
 		)
 	}
 	
-
+	//修改密码
+	function repwd(){
+		createmodalwindow("修改用户密码", 800, 250,
+				'${baseurl}repwd.action');
+	}
+	
 	//帮助
 	function showhelp(){
 	    window.open('${baseurl}help/help.html','帮助文档'); 
@@ -92,7 +103,11 @@
 			欢迎当前用户：${activeUser.username}&nbsp;&nbsp;
 			<A style="text-decoration:none;" href=javascript:showhelp()>使用帮助</A>
 			&nbsp;&nbsp;
-			<A style="text-decoration:none;" title='修改密码' ref='modifypwd' href="#" rel='${baseurl}user/updatepwd.action' icon='icon-null' id="modifypwd" >修改密码</A>
+			
+			<c:if test="${activeUser.groupid!='0'}">
+			<A style="text-decoration:none;" title='修改密码' onclick="repwd()" icon='icon-null' id="modifypwd" >修改密码</A>
+			</c:if>
+			
 			&nbsp;&nbsp;
 			<A style="text-decoration:none;" id="loginOut" href=javascript:logout()>退出系统</A>
 
@@ -121,7 +136,5 @@
 		id="mainPanle" region="center">
 		<DIV id="tabs" class="easyui-tabs" border="false" fit="true"></DIV>
 	</DIV>
-
-
 </BODY>
 </HTML>
