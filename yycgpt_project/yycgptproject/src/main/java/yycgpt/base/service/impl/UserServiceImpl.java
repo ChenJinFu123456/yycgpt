@@ -3,7 +3,6 @@ package yycgpt.base.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.logging.log4j.core.helpers.UUIDUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,14 +23,11 @@ import yycgpt.base.pojo.vo.ActiveUser;
 import yycgpt.base.pojo.vo.SysuserCustom;
 import yycgpt.base.pojo.vo.SysuserQueryVo;
 import yycgpt.base.process.context.Config;
-import yycgpt.base.process.result.ExceptionResultInfo;
-import yycgpt.base.process.result.ResultInfo;
 import yycgpt.base.process.result.ResultUtil;
 import yycgpt.base.service.UserService;
 import yycgpt.utils.CheckRegex;
 import yycgpt.utils.MD5;
 import yycgpt.utils.MyUtil;
-import yycgpt.utils.ResourcesUtil;
 import yycgpt.utils.UUIDBuild;
 
 public class UserServiceImpl implements UserService {
@@ -311,6 +307,22 @@ public class UserServiceImpl implements UserService {
 					null));
 		}
 
+		// 邮箱
+		String email = sysuserCustom.getEmail();
+		if (email == null) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 733,
+					null));
+		} else if (!CheckRegex.isEmail_all(email)) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 736,
+					null));
+		}
+		// 手机
+		String phone = sysuserCustom.getPhone();
+		if (phone == null || !CheckRegex.isEmail_phone(phone)) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 737,
+					null));
+		}
+
 		// 添加
 		// 设置主键
 		sysuserCustom.setId(UUIDBuild.getUUID());
@@ -435,7 +447,7 @@ public class UserServiceImpl implements UserService {
 		// 设置注册时间
 		sysuserCustom.setCreatetime(MyUtil.getNowDate());
 
-		// 判断邮箱(163)
+		// 邮箱校验(163)
 		String email = sysuserCustom.getEmail();
 		if (email == null) {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 733,
@@ -444,7 +456,13 @@ public class UserServiceImpl implements UserService {
 			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 734,
 					null));
 		}
-		
+		// 手机校验
+		String phone = sysuserCustom.getPhone();
+		if (phone == null || !CheckRegex.isEmail_phone(phone)) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 735,
+					null));
+		}
+
 		sysuserMapper.insert(sysuserCustom);
 
 		return sysuserCustom;
@@ -622,6 +640,22 @@ public class UserServiceImpl implements UserService {
 					null));
 		}
 
+		// 邮箱
+		String email = sysuserCustom.getEmail();
+		if (email == null) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 733,
+					null));
+		} else if (!CheckRegex.isEmail_all(email)) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 736,
+					null));
+		}
+		// 手机
+		String phone = sysuserCustom.getPhone();
+		if (phone == null || !CheckRegex.isEmail_phone(phone)) {
+			ResultUtil.throwExcepion(ResultUtil.createFail(Config.MESSAGE, 737,
+					null));
+		}
+
 		/*
 		 * 先查后更新 设置更新的用户信息
 		 */
@@ -636,7 +670,8 @@ public class UserServiceImpl implements UserService {
 		sysuser_update.setPwd(sysuserCustom.getPwd());// 密码
 		sysuser_update.setUsername(sysuserCustom.getUsername());// 用户名
 
-		sysuser_update.setPhone(sysuserCustom.getPhone());// 电话
+		sysuser_update.setPhone(phone);// 电话
+		sysuser_update.setEmail(email);//邮箱
 		sysuser_update.setSex(sex);// 性别
 		if (sysId != null) {// 用户类型
 			sysuser_update.setSysid(sysId);

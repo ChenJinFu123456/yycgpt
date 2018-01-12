@@ -25,11 +25,15 @@
 	}, {
 		field : 'sexname',
 		title : '性别',
-		width : 120
+		width : 40
 	},{
 		field : 'phone',
 		title : '电话',
 		width : 120
+	},{
+		field : 'email',
+		title : '邮箱',
+		width : 150
 	},{
 		field : 'groupname',
 		title : '用户类型',
@@ -58,7 +62,7 @@
 	}, {
 		field : 'statename',
 		title : '状态',
-		width : 120,
+		width : 50,
 		 /* formatter : function(value, row, index) {
 			if (value == '0') {
 				return "暂停";
@@ -93,7 +97,7 @@
 					//$('#btnsave').linkbutton('enable');
 					//alert('add')
 					//打开页面的添加页面
-					createmodalwindow("添加用户信息", 800, 250,
+					createmodalwindow("添加用户信息", 800, 400,
 							'${baseurl}user/addsysuser.action');
 				}
 			}, ];

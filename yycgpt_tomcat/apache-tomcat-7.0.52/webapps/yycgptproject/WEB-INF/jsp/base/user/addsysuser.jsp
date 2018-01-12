@@ -81,7 +81,7 @@
 			<TBODY>
 				<TR>
 					<TD background=images/r_0.gif width="100%">
-						<TABLE cellSpacing=0 cellPadding=0 width="100%" >
+						<TABLE cellSpacing=0 cellPadding=0 width="100%">
 							<TBODY>
 								<TR>
 									<TD>&nbsp;系统用户信息</TD>
@@ -117,19 +117,26 @@
 									</TD>
 								</TR>
 								<TR>
-									<TD height=30 width="15%" align=right><p>用户密码：</p>
-										<p>确认密码：</p></TD>
+									<TD height=30 width="15%" align=right><p>用户密码：</p></TD>
 									<TD class=category width="35%">
 										<div>
 											<input type="password" id="sysuser_password"
-												name="sysuserCustom.pwd" /> <input type="password"
-												id="sysuser_repassword" name="sysuserCustom.repwd" />
+												name="sysuserCustom.pwd" />
 										</div>
 										<div id="sysuser_passwordTip"></div>
 									</TD>
 
+									<TD height=30 width="15%" align=right>确认密码</TD>
+									<TD class=category width="35%">
+										<div>
+											<input type="password" id="sysuser_repassword"
+												name="sysuserCustom.repwd" />
+										</div>
+										<div id="sysuser_passwordTip"></div>
+									</TD>
 
-
+								</tr>
+								<tr>
 									<TD height=30 width="15%" align=right>用户类型：</TD>
 									<TD class=category width="35%">
 										<div>
@@ -147,7 +154,17 @@
 										<div id="sysuser_groupidTip"></div>
 									</TD>
 
-
+									<TD height=30 width="15%" align=right>用户性别：</TD>
+									<TD class=category width="35%">
+										<div>
+											<select name="sysuserCustom.sex" id="sysuser_groupid">
+												<option value="">请选择</option>
+												<option value="1">男</option>
+												<option value="0">女</option>
+												<div id="sysuser_groupidTip"></div>
+											</select>
+										</div>
+									</TD>
 								</TR>
 								<TR>
 									<TD height=30 width="15%" align=right>用户单位名称：</TD>
@@ -162,17 +179,15 @@
 								</TR>
 
 								<tr>
-									<TD height=30 width="15%" align=right>用户性别：</TD>
+									<TD height=30 width="15%" align=right>用户邮箱：</TD>
 									<TD class=category width="35%">
 										<div>
-											<select name="sysuserCustom.sex" id="sysuser_groupid">
-												<option value="">请选择</option>
-												<option value="1">男</option>
-												<option value="0">女</option>
-												<div id="sysuser_groupidTip"></div>
-											</select>
+											<input type="text" id="sysuser_email"
+												name="sysuserCustom.email" />
 										</div>
+										<div id="sysuser_usernameTip"></div>
 									</TD>
+									
 
 									<TD height=30 width="15%" align=right>用户电话：</TD>
 									<TD class=category width="35%">

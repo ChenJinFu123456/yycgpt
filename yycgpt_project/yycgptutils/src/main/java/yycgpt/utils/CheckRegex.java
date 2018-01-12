@@ -46,17 +46,17 @@ public class CheckRegex {
 	//判断手机号码13[0-9]{9}
 	
 	public static boolean isEmail_phone(String str) {
-		Pattern pattern = Pattern.compile("13[0-9]{9}");
+		Pattern pattern = Pattern.compile("^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$");
 		Matcher isNum = pattern.matcher(str);
 		if (!isNum.matches()) {
 			return false;
 		}
 		return true;
 	}
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
-		System.out.println(isEmail_phone("18819491842"));
-	}
+		System.out.println(isEmail_phone("1881949184"));
+	}*/
 
 	
 }

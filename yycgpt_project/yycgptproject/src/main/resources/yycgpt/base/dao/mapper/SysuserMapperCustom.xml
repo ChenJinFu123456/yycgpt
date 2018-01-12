@@ -86,6 +86,7 @@
 		SYSUSER.groupid,
 		sysuser.sex,
 		sysuser.phone,
+		sysuser.email,
 		(select info
 		from dictinfo
 		where dictcode = SYSUSER.sex
