@@ -134,6 +134,7 @@
 			},{
 				field : 'useryymc',
 				title : '医院名称',
+				align:'center',
 				width : 100,
 			formatter:function (value,row,index){
 				//如果从json中取不出useryymc则显示成总计两个字
@@ -155,27 +156,33 @@
 			},{
 				field : 'bm',
 				title : '流水号',
+				align:'center',
 				width : 50
 
 			},{
 				field : 'mc',
 				title : '通用名',
+				align:'center',
 				width : 100
 			},{
 				field : 'gg',
 				title : '规格',
+				align:'center',
 				width : 70
 			},{
 				field : 'zbjg',
 				title : '中标价',
+				align:'center',
 				width : 50
 			},{
 				field : 'jyjg',
 				title : '交易价',
+				align:'center',
 				width : 50
 			},{
 				field : 'cgl',
 				title : '采购量',
+				align:'center',
 				width : 50,
 				formatter : function(value, row, index) {
 					if(row.id){//如果有产品信息id表示不是总计行
@@ -189,22 +196,27 @@
 			},{
 				field : 'cgje',
 				title : '采购金额',
+				align:'center',
 				width : 100
 			},{
 				field : 'scqymc',
 				title : '生产企业',
+				align:'center',
 				width : 200
 			},{
 				field : 'usergysmc',
 				title : '供货商',
+				align:'center',
 				width : 100
 			},{
 				field : 'lbmc',
 				title : '管理类别',
+				align:'center',
 				width : 80
 			},{
 				field : 'cgztmc',
 				title : '采购状态',
+				align:'center',
 				width : 80
 			} ] ];
 	

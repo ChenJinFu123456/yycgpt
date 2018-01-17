@@ -101,8 +101,8 @@
 		border="false" split="true" region="north">
 		<SPAN style="padding-right: 20px; float: right;" class="head">
 			欢迎当前用户：${activeUser.username}&nbsp;&nbsp;
-			<A style="text-decoration:none;" href=javascript:showhelp()>使用帮助</A>
-			&nbsp;&nbsp;
+			<!-- <A style="text-decoration:none;" href=javascript:showhelp()>使用帮助</A>
+			&nbsp;&nbsp; -->
 			
 			<c:if test="${activeUser.groupid!='0'}">
 			<A style="text-decoration:none;" title='修改密码' onclick="repwd()" icon='icon-null' id="modifypwd" >修改密码</A>

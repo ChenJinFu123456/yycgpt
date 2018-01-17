@@ -27,6 +27,7 @@
 		field : 'useryymc',
 		title : '医院名称',
 		width : 80,
+		align:'center',
 		formatter : function(value, row, index) {
 			//如果从json中取不出useryymc则显示成总计两个字
 			if (value) {
@@ -38,26 +39,32 @@
 	}, {
 		field : 'yycgdbm',
 		title : '采购单号',
+		align:'center',
 		width : 70
 	}, {
 		field : 'usergysmc',
 		title : '供货商',
+		align:'center',
 		width : 80
 	},{
 		field : 'scqymc',
 		title : '生产企业',
-		width : 120
+		align:'center',
+		width : 200
 	}, {
 		field : 'bm',
 		title : '产品流水号',
+		align:'center',
 		width : 65
 	}, {
 		field : 'lbmc',
 		title : '管理类别',
+		align:'center',
 		width : 65
 	}, {
 		field : 'mc',
 		title : '通用名',
+		align:'center',
 		width : 100
 	},/*  {
 			field : 'jx',
@@ -66,6 +73,7 @@
 		}, */{
 		field : 'gg',
 		title : '规格',
+		align:'center',
 		width : 70
 	}/* , {
 			field : 'zhxs',
@@ -74,10 +82,12 @@
 		} */, {
 		field : 'jyjg',
 		title : '交易价',
+		align:'center',
 		width : 50
 	}, {
 		field : 'cgl',
 		title : '采购量',
+		align:'center',
 		width : 50,
 		formatter : function(value, row, index) {
 			if (value) {
@@ -86,7 +96,8 @@
 		}
 	}, {
 		field : 'cgje',
-		title : '采购金额',
+		title : '采购金额(元)',
+		align:'center',
 		width : 50,
 		formatter : function(value, row, index) {
 			if (value) {
@@ -96,6 +107,7 @@
 	}, {
 		field : 'rkl',
 		title : '入库量',
+		align:'center',
 		width : 40,
 		formatter : function(value, row, index) {
 			if (value) {
@@ -104,7 +116,8 @@
 		}
 	}, {
 		field : 'rkje',
-		title : '入库金额',
+		title : '入库金额(元)',
+		align:'center',
 		width : 55,
 		formatter : function(value, row, index) {
 			if (value) {
@@ -130,7 +143,8 @@
 	}, */{
 		field : 'cgztmc',
 		title : '采购状态',
-		width : 50
+		align:'center',
+		width : 80
 	} ] ];
 
 	function initGrid() {
@@ -156,6 +170,7 @@
 			rownumbers : true,
 			toolbar : toolbar,
 			loadMsg : "",
+			/* align:'center', */
 			pageList : [ 15, 30, 50, 100 ],
 			onClickRow : function(index, field, value) {
 				$('#businesslist').datagrid('unselectRow', index);

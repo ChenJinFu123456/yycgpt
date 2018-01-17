@@ -17,26 +17,32 @@
 	var datagrid_v = [ [ {
 		field : 'userid',//对应json中的key
 		title : '帐号',
+		align:'center',
 		width : 120
 	}, {
 		field : 'username',
 		title : '用户姓名',
+		align:'center',
 		width : 120
 	}, {
 		field : 'sexname',
 		title : '性别',
+		align:'center',
 		width : 40
 	},{
 		field : 'phone',
 		title : '电话',
+		align:'center',
 		width : 120
 	},{
 		field : 'email',
 		title : '邮箱',
+		align:'center',
 		width : 150
 	},{
 		field : 'groupname',
 		title : '用户类型',
+		align:'center',
 		width : 120,
 		//通过此方法重新格式化参数的内容，value:从json中取出的值，
 		//row:一行的对象，index：行的序号
@@ -58,11 +64,13 @@
 	}, {
 		field : 'sysmc',
 		title : '所属单位',
+		align:'center',
 		width : 120
 	}, {
 		field : 'statename',
 		title : '状态',
-		width : 50,
+		align:'center',
+		width : 50
 		 /* formatter : function(value, row, index) {
 			if (value == '0') {
 				return "暂停";
@@ -73,6 +81,7 @@
 	}, {
 		field : 'delBtn',
 		title : '删除',
+		align:'center',
 		width : 60,
 		formatter : function(value, row, index) {
 			return "<a href=javaScript:deleteSysuser('" + row.id + "')>删除</a>";
@@ -80,6 +89,7 @@
 	}, {
 		field : 'editBtn',
 		title : '修改',
+		align:'center',
 		width : 60,
 		formatter : function(value, row, index) {
 			return "<a href=javaScript:editSysUser('" + row.id + "')>修改</a>";

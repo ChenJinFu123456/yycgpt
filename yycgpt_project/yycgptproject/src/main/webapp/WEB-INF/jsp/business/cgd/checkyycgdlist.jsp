@@ -67,18 +67,22 @@
 			},{
 				field : 'mc',
 				title : '采购单名称',
-				width : 200
+				align : 'center',
+				width : 215
 			},{
 				field : 'bm',
 				title : '采购单编号',
+				align : 'center',
 				width : 80
 			},{
 				field : 'useryymc',
 				title : '医院名称',
-				width : 130
+				align : 'center',
+				width : 120
 			},{
 				field : 'opt',
 				title : '修改审核结果',
+				align : 'center',
 				width : 100,
 				formatter : function(value, row, index) {
 					var string = '<select name="yycgdCustoms['+index+'].zt">'
@@ -90,6 +94,7 @@
 			},{
 				field : 'shyj',
 				title : '审核意见',
+				align : 'center',
 				width : 175,
 				formatter : function(value, row, index) {
 					var val;
@@ -103,6 +108,7 @@
 			},{
 				field : 'cjtime',
 				title : '建单时间',
+				align : 'center',
 				width : 80,
 				formatter : function(value, row, index) {
 					if (value) {
@@ -122,6 +128,7 @@
 			},{
 				field : 'xgtime',
 				title : '修改时间',
+				align : 'center',
 				width : 80,
 				formatter : function(value, row, index) {
 					if (value) {
@@ -140,6 +147,7 @@
 			},{
 				field : 'tjtime',
 				title : '提交时间',
+				align : 'center',
 				width : 80,
 				formatter : function(value, row, index) {
 					if (value) {
@@ -158,6 +166,7 @@
 			},{
 				field : 'shtime',
 				title : '审核时间',
+				align : 'center',
 				width : 80,
 				formatter : function(value, row, index) {
 					if (value) {
@@ -176,10 +185,12 @@
 			},{
 				field : 'yycgdztmc',
 				title : '采购单<br>状态',
+				align : 'center',
 				width : 55
 			},{
 				field : 'opt3',
 				title : '查看',
+				align : 'center',
 				width : 30,
 				formatter : function(value, row, index) {
 					return '<a href=javascript:yycgdview("' + row.bm

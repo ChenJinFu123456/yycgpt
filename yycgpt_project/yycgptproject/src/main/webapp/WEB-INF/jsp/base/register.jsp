@@ -39,7 +39,7 @@
 						<TABLE cellSpacing=0 cellPadding=0 width="100%" >
 							<TBODY>
 								<TR>
-									<TD>&nbsp;系统用户信息</TD>
+									<TD>&nbsp;用户信息</TD>
 									<TD align=right>&nbsp;</TD>
 								</TR>
 							</TBODY>

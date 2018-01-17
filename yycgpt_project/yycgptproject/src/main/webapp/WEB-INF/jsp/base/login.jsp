@@ -82,6 +82,11 @@ $(document).ready(function(){
 		}
 
 	}
+	//注册跳转
+	function register(){
+		createmodalwindow("用户注册", 800, 300,
+		'${baseurl}register.action');
+	}
 	//登录提示回调方法
 	function login_commit_callback(data) {
 		message_alert(data);
@@ -135,12 +140,14 @@ $(document).ready(function(){
 				<TABLE class="tab" border="0" cellSpacing="6" cellPadding="8">
 					<TBODY>
 						<TR>
-							<TD>用户名：</TD>
-							<TD colSpan="2"><input type="text" id="userid"
-								name="userid" style="WIDTH: 130px" /></TD>
+							<TD>账&nbsp;&nbsp;&nbsp;号：</TD>
+							<TD colSpan="2">
+							<input type="text" id="userid" name="userid" style="WIDTH: 130px" />
+							</TD>
+							
 						</TR>
 						<TR>
-							<TD>密 码：</TD>
+							<TD>密&nbsp;&nbsp;&nbsp;码：</TD>
 							<TD><input type="password" id="password" name="pwd" style="WIDTH: 130px" />
 							</TD>
 						</TR>
@@ -155,6 +162,8 @@ $(document).ready(function(){
 						<TR>
 							<TD colSpan="2" align="center"><input type="button"
 								class="btnalink" onclick="loginsubmit()" value="登&nbsp;&nbsp;录" />
+								<input type="button"
+								class="btnalink" onclick="register()" value="注&nbsp;&nbsp;册" />
 								<input type="reset" class="btnalink" value="重&nbsp;&nbsp;置" /></TD>
 						</TR>
 					</TBODY>

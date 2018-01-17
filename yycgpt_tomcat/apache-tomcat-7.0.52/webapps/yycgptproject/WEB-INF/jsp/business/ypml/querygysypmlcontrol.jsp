@@ -74,14 +74,17 @@ var columns = [ [{
 },{
 	field : 'usergysmc',
 	title : '供货企业',
+	align : 'center',
 	width : 80
 },{
 	field : 'controlmc',
 	title : '供货状态',
+	align : 'center',
 	width : 80
 },{
 	field : 'control',
 	title : '修改供货状态',
+	align : 'center',
 	width : 80,
 	//select下拉框(供货商产品控制状态列表)
 	formatter : function (value,row,index){
@@ -95,6 +98,7 @@ var columns = [ [{
 },{
 	field : 'advice',
 	title : '审核意见',
+	align : 'center',
 	width : 80,
 	//select下拉框(供货商产品控制状态列表)
 	formatter : function (value,row,index){
@@ -110,10 +114,12 @@ var columns = [ [{
 },{
 	field : 'bm',
 	title : '流水号',
+	align : 'center',
 	width : 60
 },{
 	field : 'mc',
 	title : '通用名',
+	align : 'center',
 	width : 100
 }/* ,{
 	field : 'jx',
@@ -122,6 +128,7 @@ var columns = [ [{
 } */,{
 	field : 'gg',
 	title : '规格',
+	align : 'center',
 	width : 100
 },/* {
 	field : 'zhxs',
@@ -130,6 +137,7 @@ var columns = [ [{
 }, */{
 	field : 'scqymc',
 	title : '生产企业',
+	align : 'center',
 	width : 200
 }, /* {
 	field : 'spmc',
@@ -138,10 +146,12 @@ var columns = [ [{
 }, */{
 	field : 'zbjg',
 	title : '中标价格',
+	align : 'center',
 	width : 55
 },{
 	field : 'jyztmc',
 	title : '交易状态',
+	align : 'center',
 	width : 60
 }
 /* ,{

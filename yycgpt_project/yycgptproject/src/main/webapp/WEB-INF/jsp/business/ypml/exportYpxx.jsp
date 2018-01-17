@@ -105,41 +105,49 @@
 			{
 				field : 'mc',
 				title : '通用名',
+				align : 'center',
 				width : 130
 			},
 			{
 				field : 'bm',
 				title : '流水号',
+				align : 'center',
 				width : 80
 			},
 			{
 				field : 'zbjg',
 				title : '中标价格',
+				align : 'center',
 				width : 80
 			},
 			{
 				field : 'gg',
 				title : '规格',
+				align : 'center',
 				width : 80
 			},
 			{
 				field : 'scqymc',
 				title : '生产企业名称',
+				align : 'center',
 				width : 180
 			},
 			{
 				field : 'jyztmc',
 				title : '交易状态',
+				align : 'center',
 				width : 80
 			},
 			{
 				field : 'lbmc',
 				title : '管理类别',
+				align : 'center',
 				width : 80
 			},
 			{
 				field : 'editBtn',
 				title : '修改',
+				align : 'center',
 				width : 60,
 				formatter : function(value, row, index) {
 					return "<a href=javaScript:editYpxx('" + row.id
@@ -149,6 +157,7 @@
 			{
 				field : 'delBtn',
 				title : '删除',
+				align : 'center',
 				width : 60,
 				formatter : function(value, row, index) {
 					return "<a href=javaScript:delYpxx('" + row.id

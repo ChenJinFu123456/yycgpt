@@ -79,18 +79,22 @@ var columns = [ [ {
 },{
 	field : 'yycgdbm',
 	title : '采购单编号',
+	align :'center',
 	width : 80
 },{
 	field : 'yycgdmc',
 	title : '采购单名称',
-	width : 150
+	align :'center',
+	width : 250
 },{
 	field : 'useryymc',
 	title : '医院名称',
+	align :'center',
 	width : 100
 },{
 	field : 'cjtime',
 	title : '建单时间',
+	align :'center',
 	width : 80,
 	formatter: function(value,row,index){
 		if(value){
@@ -109,10 +113,12 @@ var columns = [ [ {
 },{
 	field : 'bm',
 	title : '流水号',
+	align :'center',
 	width : 50
 },{
 	field : 'mc',
 	title : '通用名',
+	align :'center',
 	width : 100
 }/* ,{
 	field : 'jx',
@@ -121,6 +127,7 @@ var columns = [ [ {
 } */,{
 	field : 'gg',
 	title : '规格',
+	align :'center',
 	width : 70
 }/* ,{
 	field : 'zhxs',
@@ -129,26 +136,32 @@ var columns = [ [ {
 } */,{
 	field : 'zbjg',
 	title : '中标价',
+	align :'center',
 	width : 50
 },{
 	field : 'jyjg',
 	title : '交易价',
+	align :'center',
 	width : 50
 },{
 	field : 'cgl',
 	title : '采购量',
+	align :'center',
 	width : 50
 },{
 	field : 'cgje',
 	title : '采购金额',
+	align :'center',
 	width : 60
 },{
 	field : 'lbmc',
 	title : '管理类别',
+	align :'center',
 	width : 60
 },{
 	field : 'cgztmc',
 	title : '采购状态', 
+	align :'center',
 	width : 70
 }/* ,{
 	field : 'opt3',

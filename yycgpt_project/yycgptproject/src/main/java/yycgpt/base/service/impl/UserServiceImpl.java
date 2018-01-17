@@ -35,22 +35,17 @@ public class UserServiceImpl implements UserService {
 	// 注入mapper
 	@Autowired
 	private SysuserMapper sysuserMapper;
-
 	@Autowired
 	private SysuserMapperCustom sysuserMapperCustom;
-
 	// 监督单位
 	@Autowired
 	private UserjdMapper userjdMapper;
-
 	// 医院、卫生室
 	@Autowired
 	private UseryyMapper useryyMapper;
-
 	// 供应商
 	@Autowired
 	private UsergysMapper usergysMapper;
-
 	// 校验用户的信息 userId：帐号
 	public ActiveUser checkUserInfo(String userId, String pwd) throws Exception {
 		// 用户是否存在

@@ -88,10 +88,12 @@ var columns = [ [{
 },{
 	field : 'bm',
 	title : '流水号',
+	align :'center',
 	width : 80
 },{
 	field : 'mc',
 	title : '通用名',
+	align :'center',
 	width : 130
 },/* {
 	field : 'jx',
@@ -100,6 +102,7 @@ var columns = [ [{
 }, */{
 	field : 'gg',
 	title : '规格',
+	align :'center',
 	width : 100
 },/* {
 	field : 'zhxs',
@@ -108,6 +111,7 @@ var columns = [ [{
 }, */{
 	field : 'scqymc',
 	title : '生产企业',
+	align :'center',
 	width : 180
 },/* {
 	field : 'spmc',
@@ -116,10 +120,12 @@ var columns = [ [{
 }, */{
 	field : 'zbjg',
 	title : '中标价',
+	align :'center',
 	width : 50
 },{
 	field : 'jyztmc',
 	title : '交易状态',
+	align :'center',
 	width : 60
 }
 ]];
